@@ -16,45 +16,45 @@ const GameFrame = () => {
         // Only show the first modal if the second is not open
         setShowModal(true);
       }
-    }, 8000);
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, [showConfirmModal]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
     // setShowModal(false);
     // setShowConfirmModal(true); // Show confirmation modal
 
     let postData = {
-      "email":email
-
-      
+      email: email,
     };
 
     axios.defaults.withCredentials = true;
     await axios
-    .post(`https://test-frontend.onehubplay.com:8000/api/slot-machine/register`, postData)
-    .then((response) => {
-      console.log(response);
-      setRequestLoading(false);
+      .post(
+        `https://test-frontend.onehubplay.com:8000/api/slot-machine/register`,
+        postData
+      )
+      .then((response) => {
+        console.log(response);
+        setRequestLoading(false);
 
-      if (response.data.status === "Success") {
-        setShowModal(false); // Close the initial modal
-        setShowConfirmModal(true); // Show confirmation modal
-      } else {
-        setRequestError("Unexpected response status"); // Handle unexpected status
-      }
-    })
+        if (response.data.status === "Success") {
+          setShowModal(false); // Close the initial modal
+          setShowConfirmModal(true); // Show confirmation modal
+        } else {
+          setRequestError("Unexpected response status"); // Handle unexpected status
+        }
+      })
 
- 
-    .catch((error) => {
-      console.error(error);
-      setRequestLoading(false);
-      setRequestError("Failed to create account")
-    });
-  }
+      .catch((error) => {
+        console.error(error);
+        setRequestLoading(false);
+        setRequestError("Failed to create account");
+      });
+  };
 
   const closeConfirmModal = () => {
     setShowConfirmModal(false);
@@ -63,7 +63,10 @@ const GameFrame = () => {
   return (
     <div className="h-screen w-screen overflow-hidden relative">
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white z-10">
+        <div
+          className="absolute inset-0 flex items-center justify-center bg-white z-10 min-h-screen bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/Background_1.png')" }}
+        >
           <div className="loader"></div>
         </div>
       )}
@@ -155,10 +158,11 @@ const GameFrame = () => {
               id="confirm-modal-description"
               className="mt-2  text-center text-white"
             >
-              Please check your email for a confirmation link to verify your account.<br />
-             Once verified, you can enjoy your 3 free spins!
+              Please check your email for a confirmation link to verify your
+              account.
+              <br />
+              Once verified, you can enjoy your 3 free spins!
             </p>
-           
           </div>
         </div>
       )}
