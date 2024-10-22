@@ -78,7 +78,7 @@ getUserdata();
         </div>
       )}
       <iframe
-        src="https://slot-machine2-three.vercel.app"
+        src="https://spin-game-sandy.vercel.app"
         title="Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none"
         allowFullScreen
