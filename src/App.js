@@ -10,6 +10,7 @@ import Signup from "./Pages/Signup";
 import Amount from "./Pages/Amount";
 import Payment from "./Pages/Payment";
 import GameFrame from "./Pages/GameFrame";
+import LoadingPage from "./Pages/LoadingPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
       <Route path="/" element={<GameFrame />} />
         <Route path="/amount" element={<Amount />} />
+        <Route path="/loading" element={<LoadingPage />} />
         <Route path="/payment" element={<Payment />}></Route>
         <Route path="/login" element={<LOGIN />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
