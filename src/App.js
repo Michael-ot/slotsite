@@ -17,6 +17,7 @@ function App() {
     < Router>
       <Routes>
       <Route path="/" element={<GameFrame />} />
+      <Route path="/game" element={<GameFrame />} />
         <Route path="/amount" element={<Amount />} />
         <Route path="/loading" element={<LoadingPage />} />
         <Route path="/payment" element={<Payment />}></Route>

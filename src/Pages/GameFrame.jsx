@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import { Await } from "react-router-dom";
 import axios from "axios";
+
 
 const GameFrame = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,6 +9,19 @@ const GameFrame = () => {
   const [email, setEmail] = useState("");
   const [requestLoading, setRequestLoading] = useState(false);
   const [requestError, setRequestError] = useState(false);
+
+useEffect(()=>{
+const getUserdata = async () => {
+  let userData = localStorage.getItem("user");
+  if (userData === "null" && userData === null && userData === "" ) {
+    setShowModal(true);
+  }
+  else{
+    setShowModal(false);
+  }
+}
+getUserdata();
+}, [])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -21,11 +34,9 @@ const GameFrame = () => {
     return () => clearTimeout(timer);
   }, [showConfirmModal]);
 
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // setShowModal(false);
-    // setShowConfirmModal(true); // Show confirmation modal
 
     let postData = {
       email: email,
@@ -54,10 +65,6 @@ const GameFrame = () => {
         setRequestLoading(false);
         setRequestError("Failed to create account");
       });
-  };
-
-  const closeConfirmModal = () => {
-    setShowConfirmModal(false);
   };
 
   return (
