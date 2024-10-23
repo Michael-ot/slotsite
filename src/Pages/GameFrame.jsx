@@ -22,12 +22,14 @@ const GameFrame = () => {
     };
 
     const timer = setTimeout(() => {
-      if (!showConfirmModal) {
-        // Only show the modal if there's no user and the second modal is not open
-        let userData = localStorage.getItem("user");
-        if (userData === "null" || userData === null || userData === "") {
-          setShowModal(true);
-        }
+      // Only show the modal if there's no user and the second modal is not open
+      let userData = localStorage.getItem("user");
+      if (
+        userData === "null" ||
+        userData === null ||
+        (userData === "" && !showConfirmModal)
+      ) {
+        setShowModal(true);
       }
     }, 15000);
 
