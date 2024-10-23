@@ -10,17 +10,17 @@ const Sorry = () => {
       >
         <div className="w-96 h-96 relative flex flex-col items-center">
           <img src="/images/MessagePanel.png" alt="#" className="absolute" />
-          <div className="absolute flex flex-col items-center top-[50px]">
-            <h1 className="text-orange-500 text-4xl mb-[30px]">sorry!!</h1>
-            <p className="text-white text-1xl mb-[30px]">You have no money</p>
-            <Link to={"/login"}>
+          <div className="absolute flex flex-col items-center top-[90px]">
+          
+            <p className="text-white text-1xl mb-[10px]"> Sorry!!  You have no money</p>
+            {/* <Link to={"/login"}> */}
               <button
                 className="w-full text-black my-[20px] py-2 px-4 rounded-md bg-100% h-[40px] bg-no-repeat bg-center"
                 style={{ backgroundImage: "url('/images/ExtraLongButton.png')" }}
               >
                 Buy More?
               </button>
-            </Link>
+            {/* </Link> */}
           </div>
         </div>
       </div>
