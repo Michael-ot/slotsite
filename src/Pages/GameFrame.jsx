@@ -8,7 +8,6 @@ const GameFrame = () => {
   const [email, setEmail] = useState("");
   const [requestLoading, setRequestLoading] = useState(false);
   const [requestError, setRequestError] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const getUserData = () => {
@@ -29,19 +28,6 @@ const GameFrame = () => {
 
     return () => clearTimeout(timer);
   }, [showConfirmModal]);
-
-  // Simulate loading assets and update progress
-  useEffect(() => {
-    const loadAssets = async () => {
-      for (let i = 0; i <= 100; i += 10) {
-        setProgress(i);
-        await new Promise((resolve) => setTimeout(resolve, 200)); // Simulate loading time
-      }
-      setIsLoading(false);
-    };
-
-    loadAssets();
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,15 +60,10 @@ const GameFrame = () => {
   return (
     <div className="h-screen w-screen overflow-hidden relative">
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white z-10 min-h-screen">
+        <div className="absolute inset-0 flex items-center justify-center  z-10 min-h-screen bg-cover bg-center" 
+          style={{ backgroundImage: "url('/images/Background_1.png')" }}>
           <div className="loader-container">
-            <div className="progress-box">
-              <div
-                className="progress-bar"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <p className="loading-text">Loading... {progress}%</p>
+            <div className="spinner"></div>
           </div>
         </div>
       )}
@@ -170,25 +151,18 @@ const GameFrame = () => {
           text-align: center;
         }
 
-        .progress-box {
-          width: 320px;
+        .spinner {
+          width: 50px;
           height: 50px;
-          background-color: #222222;
-          border-radius: 5px;
-          position: relative;
-          margin-bottom: 10px;
+          border: 5px solid #222222; /* Border color */
+          border-top: 5px solid #ffea31; /* Spinner color */
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
         }
 
-        .progress-bar {
-          height: 50px;
-          background-color: #ffea31;
-          border-radius: 5px;
-          transition: width 0.2s ease;
-        }
-
-        .loading-text {
-          color: #ffffff;
-          font-size: 20px;
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
       `}</style>
     </div>
