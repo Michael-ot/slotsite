@@ -29,7 +29,7 @@ getUserdata();
         // Only show the first modal if the second is not open
         setShowModal(true);
       }
-    }, 10000);
+    }, 15000);
 
     return () => clearTimeout(timer);
   }, [showConfirmModal]);
