@@ -113,7 +113,7 @@ const GameFrame = () => {
               id="modal-description"
               className="font-bold font-serif mt-2 text-white"
             >
-              Win the Big Jackpot - Up to 20 USD!
+              Win the Big Jackpot
             </p>
 
             <form onSubmit={handleSubmit} className="mt-4 text-black">
