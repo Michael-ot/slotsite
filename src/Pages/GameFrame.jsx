@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-
 const GameFrame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -10,37 +9,40 @@ const GameFrame = () => {
   const [requestLoading, setRequestLoading] = useState(false);
   const [requestError, setRequestError] = useState(false);
 
-useEffect(()=>{
-const getUserdata = async () => {
-  let userData = localStorage.getItem("user");
-  if (userData === "null" && userData === null && userData === "" ) {
-    setShowModal(true);
-  }
-  else{
-    setShowModal(false);
-  }
-}
-getUserdata();
-}, [])
-
   useEffect(() => {
+    const getUserdata = async () => {
+      let userData = localStorage.getItem("user");
+
+      // Check if userData is null, "null", or an empty string
+      if (userData === "null" || userData === null || userData === "") {
+        setShowModal(true);
+      } else {
+        setShowModal(false);
+      }
+    };
+
     const timer = setTimeout(() => {
       if (!showConfirmModal) {
-        // Only show the first modal if the second is not open
-        setShowModal(true);
+        // Only show the modal if there's no user and the second modal is not open
+        let userData = localStorage.getItem("user");
+        if (userData === "null" || userData === null || userData === "") {
+          setShowModal(true);
+        }
       }
     }, 15000);
+
+    getUserdata();
 
     return () => clearTimeout(timer);
   }, [showConfirmModal]);
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let postData = {
       email: email,
     };
+    // happy
 
     axios.defaults.withCredentials = true;
     await axios
