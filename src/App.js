@@ -6,7 +6,7 @@ import {
 import LOGIN from "./Pages/login";
 import Signup from "./Pages/Signup";
 // import Amount from "./Pages/Amount";
-// import Sorry from "./Pages/Sorry";
+import Sorry from "./Pages/Sorry";
 import Amount from "./Pages/Amount";
 import Payment from "./Pages/Payment";
 import GameFrame from "./Pages/GameFrame";
@@ -23,6 +23,7 @@ function App() {
         <Route path="/payment" element={<Payment />}></Route>
         <Route path="/login" element={<LOGIN />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/sorry" element={<Sorry/>}></Route>
       </Routes>
     </Router>
   );
