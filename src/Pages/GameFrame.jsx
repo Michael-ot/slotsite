@@ -8,35 +8,40 @@ const GameFrame = () => {
   const [email, setEmail] = useState("");
   const [requestLoading, setRequestLoading] = useState(false);
   const [requestError, setRequestError] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const getUserdata = async () => {
+    const getUserData = () => {
       let userData = localStorage.getItem("user");
-
-      // Check if userData is null, "null", or an empty string
-      if (userData === "null" || userData === null || userData === "") {
-        setShowModal(true);
-      } else {
-        setShowModal(false);
-      }
+      return userData === "null" || userData === null || userData === "";
     };
 
     const timer = setTimeout(() => {
-      // Only show the modal if there's no user and the second modal is not open
-      let userData = localStorage.getItem("user");
-      if (
-        userData === "null" ||
-        userData === null ||
-        (userData === "" && !showConfirmModal)
-      ) {
+      if (getUserData() && !showConfirmModal) {
         setShowModal(true);
       }
     }, 15000);
 
-    getUserdata();
+    const hasUserData = getUserData();
+    if (!hasUserData) {
+      setShowModal(false);
+    }
 
     return () => clearTimeout(timer);
   }, [showConfirmModal]);
+
+  // Simulate loading assets and update progress
+  useEffect(() => {
+    const loadAssets = async () => {
+      for (let i = 0; i <= 100; i += 10) {
+        setProgress(i);
+        await new Promise((resolve) => setTimeout(resolve, 200)); // Simulate loading time
+      }
+      setIsLoading(false);
+    };
+
+    loadAssets();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,26 +49,21 @@ const GameFrame = () => {
     let postData = {
       email: email,
     };
-    // happy
 
     axios.defaults.withCredentials = true;
     await axios
-      .post(
-        `https://test-frontend.onehubplay.com:8000/api/slot-machine/register`,
-        postData
-      )
+      .post(`https://test-frontend.onehubplay.com:8000/api/slot-machine/register`, postData)
       .then((response) => {
         console.log(response);
         setRequestLoading(false);
 
         if (response.data.status === "Success") {
-          setShowModal(false); // Close the initial modal
-          setShowConfirmModal(true); // Show confirmation modal
+          setShowModal(false);
+          setShowConfirmModal(true);
         } else {
-          setRequestError("Unexpected response status"); // Handle unexpected status
+          setRequestError("Unexpected response status");
         }
       })
-
       .catch((error) => {
         console.error(error);
         setRequestLoading(false);
@@ -74,13 +74,19 @@ const GameFrame = () => {
   return (
     <div className="h-screen w-screen overflow-hidden relative">
       {isLoading && (
-        <div
-          className="absolute inset-0 flex items-center justify-center bg-white z-10 min-h-screen bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/Background_1.png')" }}
-        >
-          <div className="loader"></div>
+        <div className="absolute inset-0 flex items-center justify-center bg-white z-10 min-h-screen">
+          <div className="loader-container">
+            <div className="progress-box">
+              <div
+                className="progress-bar"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <p className="loading-text">Loading... {progress}%</p>
+          </div>
         </div>
       )}
+
       <iframe
         src="https://spin-game-sandy.vercel.app"
         title="Full Screen Iframe"
@@ -93,34 +99,24 @@ const GameFrame = () => {
 
       {showModal && !showConfirmModal && (
         <div
-          className="fixed inset-0 flex items-center justify-center h-auto bg-black bg-opacity-50 z-20 "
+          className="fixed inset-0 flex items-center justify-center h-auto bg-black bg-opacity-50 z-20"
           role="dialog"
           aria-labelledby="modal-title"
           aria-describedby="modal-description"
         >
           <div
-            className="rounded-lg p-8 shadow-md px-6 h-auto  bg-10% bg-no-repeat bg-center 
-              border-2 border-black flex flex-col justify-center items-center"
+            className="rounded-lg p-8 shadow-md px-6 h-auto bg-10% bg-no-repeat bg-center border-2 border-black flex flex-col justify-center items-center"
             style={{ backgroundImage: "url('/images/MessagePanel.png')" }}
           >
-            <h2
-              id="modal-title"
-              className="text-3xl font-bold font-sans text-white"
-            >
+            <h2 id="modal-title" className="text-3xl font-bold font-sans text-white">
               You've Won 3 Free Slot Spins
             </h2>
-            <p
-              id="modal-description"
-              className="font-bold font-serif mt-2 text-white"
-            >
+            <p id="modal-description" className="font-bold font-serif mt-2 text-white">
               Win the Big Jackpot
             </p>
 
             <form onSubmit={handleSubmit} className="mt-4 text-black">
-              <p className="text-white">
-                Verify Your Email to Claim your spins:
-              </p>
-
+              <p className="text-white">Verify Your Email to Claim your spins:</p>
               <div className="mb-4 mt-[8px]">
                 <input
                   type="email"
@@ -132,10 +128,9 @@ const GameFrame = () => {
                   required
                 />
               </div>
-
               <button
                 type="submit"
-                className="w-full text-black py-2 rounded-md bg-100% h-[40px] bg-no-repeat bg-center "
+                className="w-full text-black py-2 rounded-md bg-100% h-[40px] bg-no-repeat bg-center"
                 style={{
                   backgroundImage: "url('/images/ExtraLongButton.png')",
                 }}
@@ -155,22 +150,14 @@ const GameFrame = () => {
           aria-describedby="confirm-modal-description"
         >
           <div
-            className="rounded-lg p-8 shadow-md px-6 h-auto  bg-10% bg-no-repeat bg-center 
-              border-2 border-black flex flex-col justify-center items-center"
+            className="rounded-lg p-8 shadow-md px-6 h-auto bg-10% bg-no-repeat bg-center border-2 border-black flex flex-col justify-center items-center"
             style={{ backgroundImage: "url('/images/MessagePanel.png')" }}
           >
-            <h2
-              id="confirm-modal-title"
-              className="text-3xl font-sans mb-4 text-white font-bold"
-            >
+            <h2 id="confirm-modal-title" className="text-3xl font-sans mb-4 text-white font-bold">
               Verification Initiated
             </h2>
-            <p
-              id="confirm-modal-description"
-              className="mt-2  text-center text-white"
-            >
-              Please check your email for a confirmation link to verify your
-              account.
+            <p id="confirm-modal-description" className="mt-2 text-center text-white">
+              Please check your email for a confirmation link to verify your account.
               <br />
               Once verified, you can enjoy your 3 free spins!
             </p>
@@ -179,22 +166,29 @@ const GameFrame = () => {
       )}
 
       <style jsx>{`
-        .loader {
-          border: 8px solid rgba(0, 0, 0, 0.1);
-          border-left-color: #4f46e5; /* Indigo */
-          border-radius: 50%;
-          width: 50px;
-          height: 50px;
-          animation: spin 1s linear infinite;
+        .loader-container {
+          text-align: center;
         }
 
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
+        .progress-box {
+          width: 320px;
+          height: 50px;
+          background-color: #222222;
+          border-radius: 5px;
+          position: relative;
+          margin-bottom: 10px;
+        }
+
+        .progress-bar {
+          height: 50px;
+          background-color: #ffea31;
+          border-radius: 5px;
+          transition: width 0.2s ease;
+        }
+
+        .loading-text {
+          color: #ffffff;
+          font-size: 20px;
         }
       `}</style>
     </div>
