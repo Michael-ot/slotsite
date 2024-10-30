@@ -18,22 +18,26 @@ const LoadingPage = () => {
           `https://test-frontend.onehubplay.com:8000/api/verify-account/${token}`
         );
       };
-
       verifyAccount()
         .then((response) => {
           console.log(response.data);
           if (response.data.status === "Success") {
-            localStorage.setItem('user', JSON.stringify(response.data.data.user)); 
+            // Save user data and token to localStorage
+            localStorage.setItem(
+              "user",
+              JSON.stringify(response.data.data.user)
+            );
+            localStorage.setItem("token", response.data.data.token); // Adjust based on actual response structure
             setRedirectTo("/game");
           } else {
             setErrorMessage("Verification failed. Please try again.");
-            setIsLoading(false); 
+            setIsLoading(false);
           }
         })
         .catch((error) => {
           console.error("Error verifying account:", error);
           setErrorMessage("An error occurred during verification.");
-          setIsLoading(false); 
+          setIsLoading(false);
         });
     }
   }, [searchParams]);
