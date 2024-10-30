@@ -12,7 +12,7 @@ const Amount = () => {
 
     try {
       const response = await axios.post(
-        "https://test-frontend.onehubplay.com:8000/api",
+        "https://test-frontend.onehubplay.com:8000/api/paymentLink",
         {
           amount: amount,
         },
