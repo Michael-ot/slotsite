@@ -27,7 +27,7 @@ const LoadingPage = () => {
               "user",
               JSON.stringify(response.data.data.user)
             );
-            localStorage.setItem("token", response.data.data.token); // Adjust based on actual response structure
+            localStorage.setItem("token", response.data.data.token);
             setRedirectTo("/game");
           } else {
             setErrorMessage("Verification failed. Please try again.");

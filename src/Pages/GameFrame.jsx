@@ -140,7 +140,7 @@ const GameFrame = () => {
             <p id="confirm-modal-description" className="mt-2 text-center text-white">
               Please check your email for a confirmation link to verify your account.
               <br />
-              Once verified, you can enjoy your 3 free spins!
+              Once verified, you can enjoy your 3 free spins to win the jackpot!
             </p>
           </div>
         </div>

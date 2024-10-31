@@ -12,20 +12,17 @@ const Amount = () => {
 
     try {
       const response = await axios.post(
-        "https://test-frontend.onehubplay.com:8000/api",
-        {
-          amount: amount,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `https://test-frontend.onehubplay.com:8000/api/paymentLink`, 
+        { amount: amount }, 
+        { headers: { Authorization: `Bearer ${token}` } } 
       );
-
-      console.log("Response from server:", response.data);
+  
+      const paymentLink = response.data.data.paymentLink; 
+      if (paymentLink) {
+        window.location.href = paymentLink;
+      }
     } catch (error) {
-      console.error("Error sending amount:", error);
+      console.error("Error getting payment link:", error); 
     }
   };
 
