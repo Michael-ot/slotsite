@@ -16,7 +16,7 @@ function App() {
   return (
     < Router>
       <Routes>
-      <Route path="/" element={<Amount/>} />
+      <Route path="/" element={<GameFrame/>} />
       <Route path="/game" element={<GameFrame />} />
         <Route path="/amount" element={<Amount />} />
         <Route path="/verify" element={<LoadingPage />} />
