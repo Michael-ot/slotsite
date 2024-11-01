@@ -1,0 +1,110 @@
+
+### Endpoint: Create Payment Link
+
+URL: `/paymentLink`  
+Method: `POST`  
+Authorization: Bearer Token (via Sanctum middleware)
+
+Description: Creates a payment link for a specified user with a unique invoice number. The link redirects to a success or failure URL depending on the transaction result.
+
+#### Parameters:
+- `amount` (string, required): The amount to be paid.
+- `trial` (string, optional): Indicates if it is a trial subscription.
+- `currency` (string, required): The currency code for the payment.
+
+#### Response:
+- Success (200): `{ "link": "<Generated payment link URL>" }`
+- Error (401): `{ "error": "<Validation errors>" }`
+
+---
+
+### Endpoint: Payment Success
+
+URL: `/payment-success`  
+Method: `POST`  
+Authorization: Bearer Token (via Sanctum middleware)
+
+Description: Completes the payment process by saving card details and updating the user’s wallet balance.
+
+#### Parameters:
+- `id` (int, required): User ID associated with the payment.
+- `invoiceID` (string, required): Unique invoice identifier for the transaction.
+
+#### Response:
+- Success (200): 
+  json
+  {
+    "token": "<API token>",
+    "user": { "id": "<User ID>", ... },
+    "card": { "transaction_id": "<Transaction ID>", ... },
+    "wallet": { "balance": "<Updated balance>", ... },
+    "transaction": { "id": "<Transaction ID>", "amount": "<Amount>", ... }
+  }
+
+- Error (401): `{ "error": "<Validation errors>" }`
+- Error (500): `{ "error": "An error occurred", "details": "<Exception details>" }`
+
+---
+
+### Endpoint: Show Wallet Balance
+
+URL: `/wallet/{userId}`  
+Method: `GET`  
+Authorization: Bearer Token (via Sanctum middleware)
+
+Description: Retrieves the current balance of a specified user’s game wallet.
+
+#### Parameters:
+- `userId` (int, path parameter): The ID of the user whose wallet balance is being requested.
+
+#### Response:
+- Success (200): `{ "wallet": { "balance": "<Wallet balance>", ... } }`
+- Error (404): `{ "error": "Wallet not found" }`
+
+---
+
+### Endpoint: Fund Wallet
+
+URL: `/wallet/fund`  
+Method: `POST`  
+Authorization: Bearer Token (via Sanctum middleware)
+
+Description: Adds funds to the user’s game wallet and logs the transaction.
+
+#### Parameters:
+- `amount` (float, required): The amount to add to the wallet.
+
+#### Response:
+- Success (200): 
+  json
+  {
+    "wallet": { "balance": "<Updated wallet balance>", ... },
+    "transaction": { "id": "<Transaction ID>", "amount": "<Amount>", "type": "win" }
+  }
+
+- Error (401): `{ "error": "<Validation errors>" }`
+
+---
+
+### Endpoint: Debit Wallet
+
+URL: `/wallet/debit`  
+Method: `POST`  
+Authorization: Bearer Token (via Sanctum middleware)
+
+Description: Deducts funds from the user’s wallet for a game loss or other transaction, and logs the transaction.
+
+#### Parameters:
+- `amount` (float, required): The amount to debit from the wallet.
+
+#### Response:
+- Success (200): 
+  json
+  {
+    "wallet": { "balance": "<Updated wallet balance>", ... },
+    "transaction": { "id": "<Transaction ID>", "amount": "<Amount>", "type": "loss" }
+  }
+
+- Error (404): `{ "error": "Wallet not found" }`
+- Error (400): `{ "error": "Insufficient balance" }`
+
