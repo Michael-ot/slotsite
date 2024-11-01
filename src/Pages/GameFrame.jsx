@@ -74,7 +74,7 @@ const GameFrame = () => {
       )}
 
       <iframe
-        src="https://spintest.vercel.app/"
+        src="https://slotsite.vercel.app/"
         title="Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none"
         allowFullScreen
