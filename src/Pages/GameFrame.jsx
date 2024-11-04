@@ -65,7 +65,7 @@ const GameFrame = () => {
       {isLoading && (
         <div
           className="absolute inset-0 flex items-center justify-center  z-10 min-h-screen bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/Background_1.png')" }}
+          style={{ backgroundImage: "url('/images/backload.png')" }}
         >
           <div className="loader-container">
             <div className="spinner"></div>
