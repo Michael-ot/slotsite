@@ -131,7 +131,7 @@ const GameFrame = () => {
           aria-describedby="confirm-modal-description"
         >
           <div
-            className="rounded-lg p-8 shadow-md px-6 h-auto bg-10% bg-no-repeat bg-center border-2 border-black flex flex-col justify-center items-center"
+            className="rounded-lg p-8 shadow-md px-6 w-[500px] h-auto bg-10% bg-no-repeat bg-center border-2 border-black flex flex-col justify-center items-center"
             style={{ backgroundImage: "url('/images/MessagePanel.png')" }}
           >
             <h2 id="confirm-modal-title" className="text-3xl font-sans mb-4 text-white font-bold">
