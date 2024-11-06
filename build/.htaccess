@@ -1,0 +1,17 @@
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "https://onehubplay.com"
+  Header set Access-Control-Allow-Credentials true
+  Header add Access-Control-Allow-Headers "origin, x-requested-with, content-type"
+  Header add Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
+</IfModule>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Redirect to HTTPS if not already using it
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Rewrite URLs for your Angular app
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+  RewriteRule ^.*$ - [NC,L]
+  RewriteRule ^(.*) index.html [NC,L]
+</IfModule>

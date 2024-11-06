@@ -38,7 +38,10 @@ const GameFrame = () => {
 
     axios.defaults.withCredentials = true;
     await axios
-      .post(`https://test-frontend.onehubplay.com:8000/api/slot-machine/register`, postData)
+      .post(
+        `https://test-frontend.onehubplay.com:8000/api/slot-machine/register`,
+        postData,
+      )
       .then((response) => {
         console.log(response);
         setRequestLoading(false);
@@ -60,8 +63,10 @@ const GameFrame = () => {
   return (
     <div className="h-screen w-screen overflow-hidden relative">
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center  z-10 min-h-screen bg-cover bg-center" 
-          style={{ backgroundImage: "url('/images/Background_1.png')" }}>
+        <div
+          className="absolute inset-0 flex items-center justify-center  z-10 min-h-screen bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/backload.png')" }}
+        >
           <div className="loader-container">
             <div className="spinner"></div>
           </div>
@@ -89,15 +94,23 @@ const GameFrame = () => {
             className="rounded-lg p-8 shadow-md px-6 h-auto bg-10% bg-no-repeat bg-center border-2 border-black flex flex-col justify-center items-center"
             style={{ backgroundImage: "url('/images/MessagePanel.png')" }}
           >
-            <h2 id="modal-title" className="text-3xl font-bold font-sans text-white">
+            <h2
+              id="modal-title"
+              className="text-3xl font-bold font-sans text-white"
+            >
               You've Won 3 Free Slot Spins
             </h2>
-            <p id="modal-description" className="font-bold font-serif mt-2 text-white">
+            <p
+              id="modal-description"
+              className="font-bold font-serif mt-2 text-white"
+            >
               Win the Big Jackpot
             </p>
 
             <form onSubmit={handleSubmit} className="mt-4 text-black">
-              <p className="text-white">Verify Your Email to Claim your spins:</p>
+              <p className="text-white">
+                Verify Your Email to Claim your spins:
+              </p>
               <div className="mb-4 mt-[8px]">
                 <input
                   type="email"
@@ -134,7 +147,10 @@ const GameFrame = () => {
             className="rounded-lg p-8 shadow-md px-6 w-[500px] h-auto bg-10% bg-no-repeat bg-center border-2 border-black flex flex-col justify-center items-center"
             style={{ backgroundImage: "url('/images/MessagePanel.png')" }}
           >
-            <h2 id="confirm-modal-title" className="text-3xl font-sans mb-4 text-white font-bold">
+            <h2
+              id="confirm-modal-title"
+              className="text-3xl font-sans mb-4 text-white font-bold"
+            >
               Verification Initiated
             </h2>
             <p id="confirm-modal-description" className="mt-2 text-center text-white">
@@ -161,8 +177,12 @@ const GameFrame = () => {
         }
 
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
       `}</style>
     </div>
