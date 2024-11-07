@@ -40,7 +40,7 @@ const GameFrame = () => {
     await axios
       .post(
         `https://test-frontend.onehubplay.com:8000/api/slot-machine/register`,
-        postData,
+        postData
       )
       .then((response) => {
         console.log(response);
@@ -76,7 +76,17 @@ const GameFrame = () => {
       <iframe
         src="https://spintest.vercel.app/"
         title="Full Screen Iframe"
-        className="absolute top-0 left-0 w-full h-full border-none"
+        className="absolute top-0 left-0 w-full h-full border-none hidden md:block"
+        allowFullScreen
+        onLoad={() => {
+          setIsLoading(false);
+        }}
+      ></iframe>
+
+      <iframe
+        src="https://mobileslot.vercel.app/"
+        title="Mobile Full Screen Iframe"
+        className="absolute top-0 left-0 w-full h-full border-none block md:hidden"
         allowFullScreen
         onLoad={() => {
           setIsLoading(false);
@@ -153,10 +163,14 @@ const GameFrame = () => {
             >
               Verification Initiated
             </h2>
-            <p id="confirm-modal-description" className="mt-2 text-center text-white">
-               check your email for a confirmation link to verify your account before it expires
+            <p
+              id="confirm-modal-description"
+              className="mt-2 text-center text-white"
+            >
+              check your email for a confirmation link to verify your account
+              before it expires
               <br />
-             so you can use your 3 free spins to win the jackpot!
+              so you can use your 3 free spins to win the jackpot!
             </p>
           </div>
         </div>
