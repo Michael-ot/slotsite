@@ -5,7 +5,9 @@ const GameFrame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [redirectTo, setRedirectTo] = useState(null);
   const [email, setEmail] = useState("");
+  const [verified, setVerified] = useState(false);
   const [requestLoading, setRequestLoading] = useState(false);
   const [requestError, setRequestError] = useState(false);
 
@@ -48,7 +50,24 @@ const GameFrame = () => {
 
         if (response.data.status === "Success") {
           setShowModal(false);
-          setShowConfirmModal(true);
+
+          const isVerified = response.data.data.hasVerified;
+
+          // localStorage.setItem("isVerified", isVerified.toString());
+
+          setVerified(isVerified);
+
+          if (isVerified) {
+            // Save user data and token to localStorage
+            localStorage.setItem(
+              "user",
+              JSON.stringify(response.data.data.user)
+            );
+            localStorage.setItem("token", response.data.data.token); // Adjust based on actual response structure
+            setRedirectTo("/game");
+          } else {
+            setShowConfirmModal(true);
+          }
         } else {
           setRequestError("Unexpected response status");
         }
