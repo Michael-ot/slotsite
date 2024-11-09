@@ -160,7 +160,7 @@ const GameFrame = () => {
     axios.defaults.withCredentials = true;
     await axios
       .post(
-        `https://onehubplay.com:8000/api/slot-machine/slot-game`,
+        `https://onehubplay.com:8000/api/slot-machine/register`,
         postData
       )
       .then((response) => {
