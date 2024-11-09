@@ -21,7 +21,7 @@ const Amount = () => {
 
     try {
       const response = await axios.post(
-        "https://test-frontend.onehubplay.com:8000/api",
+        "https://onehubplay.com:8000/api",
         { amount },
         { headers: { Authorization: `Bearer ${token}` } },
       );

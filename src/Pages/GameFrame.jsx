@@ -64,7 +64,7 @@ const GameFrame = () => {
 
     const trackPage = async () => {
       axios.defaults.withCredentials = true;
-      return await axios.post(`https://test-frontend.onehubplay.com:8000/api/slot-game-1-visit`, postData);
+      return await axios.post(`https://onehubplay.com:8000/api/slot-game-1-visit`, postData);
     };
  
    trackPage()
@@ -111,7 +111,7 @@ const GameFrame = () => {
 
       const trackPage = async () => {
         axios.defaults.withCredentials = true;
-        return await axios.post(`https://test-frontend.onehubplay.com:8000/api/slot-game-1-register-visit`, postData);
+        return await axios.post(`https://onehubplay.com:8000/api/slot-game-1-register-visit`, postData);
       };
   
     trackPage()
@@ -159,7 +159,7 @@ const GameFrame = () => {
     axios.defaults.withCredentials = true;
     await axios
       .post(
-        `https://test-frontend.onehubplay.com:8000/api/slot-machine/slot-game`,
+        `https://onehubplay.com:8000/api/slot-machine/slot-game`,
         postData
       )
       .then((response) => {

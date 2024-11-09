@@ -15,7 +15,7 @@ const LoadingPage = () => {
       const verifyAccount = async () => {
         axios.defaults.withCredentials = true;
         return axios.post(
-          `https://test-frontend.onehubplay.com:8000/api/verify-account/${token}`
+          `https://onehubplay.com:8000/api/verify-account/${token}`
         );
       };
       verifyAccount()
