@@ -154,6 +154,7 @@ const GameFrame = () => {
 
     let postData = {
       email: email,
+      camp: params?.camp
     };
 
     axios.defaults.withCredentials = true;
