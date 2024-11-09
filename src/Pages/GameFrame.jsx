@@ -57,7 +57,7 @@ const GameFrame = () => {
 
           setVerified(isVerified);
 
-          if (isVerified) {
+          // if (isVerified) {
             // Save user data and token to localStorage
             localStorage.setItem(
               "user",
@@ -65,9 +65,9 @@ const GameFrame = () => {
             );
             localStorage.setItem("token", response.data.data.token); // Adjust based on actual response structure
             setRedirectTo("/game");
-          } else {
-            setShowConfirmModal(true);
-          }
+          // } else {
+          //   setShowConfirmModal(true);
+          // }
         } else {
           setRequestError("Unexpected response status");
         }
