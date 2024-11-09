@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+
+
+const geoip2 = window.geoip2;
 
 const GameFrame = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,6 +14,120 @@ const GameFrame = () => {
   const [verified, setVerified] = useState(false);
   const [requestLoading, setRequestLoading] = useState(false);
   const [requestError, setRequestError] = useState(false);
+  const location = useLocation();
+  const [geoData, setGeoData] = useState(null);
+  const [params, setParams] = useState({
+    camp: '',
+    unid: '',
+    email: '',
+  });
+
+  const effectRan = useRef(false);
+  const registerEffectRan = useRef(false);
+
+  useEffect(() => {
+    geoip2.country(
+      (response1) => {
+        setGeoData(response1);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  }, []);
+
+  useEffect(() => {
+    if (geoData == null ) return;
+    // if(params.camp == "" || params.camp == null) return;
+    if (effectRan.current) return; // Return early if effect has already run once
+
+    // Get the URLSearchParams object from the location search
+    const urlParams = new URLSearchParams(location.search);
+
+    // Extract the values from the URL
+    const camp = urlParams.get('camp');
+    const unid = urlParams.get('unid');
+    const email = urlParams.get('email');
+
+    let params = { camp, unid, email }
+    setParams({...params });  
+
+    // const hasValues = camp && unid && email;
+
+    console.log(camp, unid, email);
+
+    // const loadingToast = toast.loading("Loading");
+    let postData = {
+      ip_address: geoData?.traits?.ip_address? geoData?.traits?.ip_address : '34834',  
+      campaign_name: params?.camp,
+    }
+
+    const trackPage = async () => {
+      axios.defaults.withCredentials = true;
+      return await axios.post(`https://test-frontend.onehubplay.com:8000/api/slot-game-1-visit`, postData);
+    };
+ 
+   trackPage()
+    .then((resp) => {
+      console.log(resp)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    // if(params?.camp){
+      
+    //   setCancelModal(true);
+    // }
+      
+    effectRan.current = true; // Mark effect as run
+    
+  }, [geoData,params]);
+
+  useEffect(()=>{
+    if(showModal == true){
+
+      if (geoData == null ) return;
+      // if(params.camp == "" || params.camp == null) return;
+      if (registerEffectRan.current) return; // Return early if effect has already run once
+
+      // Get the URLSearchParams object from the location search
+      const urlParams = new URLSearchParams(location.search);
+
+      // Extract the values from the URL
+      const camp = urlParams.get('camp');
+      const unid = urlParams.get('unid');
+      const email = urlParams.get('email');
+
+      let params = { camp, unid, email }
+      setParams({...params });  
+
+      console.log(camp, unid, email);
+
+      let postData = {
+        ip_address: geoData?.traits?.ip_address? geoData?.traits?.ip_address : '34834',  
+        campaign_name: params?.camp,
+      }
+
+      const trackPage = async () => {
+        axios.defaults.withCredentials = true;
+        return await axios.post(`https://test-frontend.onehubplay.com:8000/api/slot-game-1-register-visit`, postData);
+      };
+  
+    trackPage()
+      .then((resp) => {
+        console.log(resp)
+        // toast.dismiss(loadingToast);
+      })
+      .catch((error) => {
+        console.log(error);
+        // toast.dismiss(loadingToast);
+        // toast.error(error?.message);
+      });
+        
+      registerEffectRan.current = true;
+    }
+  },[showModal])
 
   useEffect(() => {
     const getUserData = () => {
@@ -41,7 +159,7 @@ const GameFrame = () => {
     axios.defaults.withCredentials = true;
     await axios
       .post(
-        `https://test-frontend.onehubplay.com:8000/api/slot-machine/register`,
+        `https://test-frontend.onehubplay.com:8000/api/slot-machine/slot-game`,
         postData
       )
       .then((response) => {
