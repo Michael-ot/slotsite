@@ -66,5 +66,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+      <script>
+        window.addEventListener('message', function(event){
+          if(event.data.action === "openPaymentTab"){
+            window.open("https://slotmachine.onehubplay.com/sorry","_self");
+          }
+        })
+      </script>
   </body>
 </html>
