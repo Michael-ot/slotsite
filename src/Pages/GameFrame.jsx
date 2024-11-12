@@ -131,7 +131,7 @@ const GameFrame = () => {
 
   useEffect(() => {
 
-    let userToken = localStorage.getItem("user");
+    let userToken = localStorage.getItem("token");
     setToken(userToken)
     const getUserData = () => {
       let userData = localStorage.getItem("user");
