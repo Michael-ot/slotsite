@@ -21,7 +21,7 @@ const GameFrame = () => {
     unid: '',
     email: '',
   });
-
+  const [token,setToken] = useState('');
   const effectRan = useRef(false);
   const registerEffectRan = useRef(false);
 
@@ -130,6 +130,9 @@ const GameFrame = () => {
   },[showModal])
 
   useEffect(() => {
+
+    let userToken = localStorage.getItem("user");
+    setToken(userToken)
     const getUserData = () => {
       let userData = localStorage.getItem("user");
       return userData === "null" || userData === null || userData === "";
@@ -212,7 +215,7 @@ const GameFrame = () => {
       )}
 
       <iframe
-        src="https://spintest.vercel.app/"
+        src={"https://spintest.vercel.app?token="+token}
         title="Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none hidden md:block"
         allowFullScreen
@@ -222,7 +225,7 @@ const GameFrame = () => {
       ></iframe>
 
       <iframe
-        src="https://mobileslot.vercel.app/"
+        src={"https://mobileslot.vercel.app/?token="+token}
         title="Mobile Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none block md:hidden"
         allowFullScreen
