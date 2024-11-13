@@ -22,6 +22,7 @@ const GameFrame = () => {
     email: '',
   });
   const [token,setToken] = useState('');
+  const [userid,setUserid] = useState('');
   const effectRan = useRef(false);
   const registerEffectRan = useRef(false);
 
@@ -132,8 +133,9 @@ const GameFrame = () => {
   useEffect(() => {
 
     let userToken = localStorage.getItem("token");
-    console.log('token - ',userToken)
+    let user = JSON.parse(localStorage.getItem("token") ? localStorage.getItem("token") : "")
     setToken(userToken)
+    setUserid(user.id)
     const getUserData = () => {
       let userData = localStorage.getItem("user");
       return userData === "null" || userData === null || userData === "";
@@ -189,6 +191,9 @@ const GameFrame = () => {
             localStorage.setItem("token", response.data.data.token);
             console.log(response.data.data.token)
             setToken(response.data.data.token)
+            localStorage.setItem("user-id", response.data.data.user.id);
+            console.log("USER ID" + response.data.data.user.id)
+            setUserid(response.data.data.user.id)
             setRedirectTo("/game");
           // } else {
           //   setShowConfirmModal(true);
@@ -216,9 +221,9 @@ const GameFrame = () => {
           </div>
         </div>
       )}
-      <h1>{"https://spintest.vercel.app?token="+token}</h1>        
+      <h1>{"https://spintest.vercel.app?token="+token + "&uid="+ userid}</h1>        
       <iframe
-        src={"https://spintest.vercel.app?token="+token}
+        src={"https://spintest.vercel.app?token="+token + "&uid="+ userid}
         title="Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none hidden md:block"
         allowFullScreen
