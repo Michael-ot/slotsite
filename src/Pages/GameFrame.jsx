@@ -132,6 +132,7 @@ const GameFrame = () => {
   useEffect(() => {
 
     let userToken = localStorage.getItem("token");
+    console.log('token - ',userToken)
     setToken(userToken)
     const getUserData = () => {
       let userData = localStorage.getItem("user");
@@ -185,7 +186,9 @@ const GameFrame = () => {
               "user",
               JSON.stringify(response.data.data.user)
             );
-            localStorage.setItem("token", response.data.data.token); // Adjust based on actual response structure
+            localStorage.setItem("token", response.data.data.token);
+            console.log(response.data.data.token)
+            setToken(response.data.data.token)
             setRedirectTo("/game");
           // } else {
           //   setShowConfirmModal(true);
@@ -213,7 +216,7 @@ const GameFrame = () => {
           </div>
         </div>
       )}
-
+      <h1>{"https://spintest.vercel.app?token="+token}</h1>        
       <iframe
         src={"https://spintest.vercel.app?token="+token}
         title="Full Screen Iframe"
