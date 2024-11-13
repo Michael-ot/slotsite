@@ -133,9 +133,10 @@ const GameFrame = () => {
   useEffect(() => {
 
     let userToken = localStorage.getItem("token");
-    let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "")
+    console.log(JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}"))
+    let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}")
     setToken(userToken)
-    setUserid(user.id)
+    setUserid(user?.id)
     const getUserData = () => {
       let userData = localStorage.getItem("user");
       return userData === "null" || userData === null || userData === "";
