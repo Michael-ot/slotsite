@@ -222,7 +222,7 @@ const GameFrame = () => {
           </div>
         </div>
       )}
-      <h1>{"https://spintest.vercel.app?token="+token + "&uid="+ userid}</h1>        
+      {/* <h1>{"https://spintest.vercel.app?token="+token + "&uid="+ userid}</h1>         */}
       <iframe
         src={"https://spintest.vercel.app?token="+token + "&uid="+ userid}
         title="Full Screen Iframe"
