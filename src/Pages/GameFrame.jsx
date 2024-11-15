@@ -37,6 +37,13 @@ const GameFrame = () => {
     );
   }, []);
 
+  useEffect(()=>{
+    const urlParams = new URLSearchParams(location.search)
+    let dailys = urlParams.get('dl');
+
+
+  },[])
+
   useEffect(() => {
     if (geoData == null ) return;
     // if(params.camp == "" || params.camp == null) return;
@@ -45,10 +52,13 @@ const GameFrame = () => {
     // Get the URLSearchParams object from the location search
     const urlParams = new URLSearchParams(location.search);
 
+
     // Extract the values from the URL
     const camp = urlParams.get('camp');
     const unid = urlParams.get('unid');
     const email = urlParams.get('email');
+    let dailys = urlParams.get('dl');
+
 
     let params = { camp, unid, email }
     setParams({...params });  
@@ -61,6 +71,7 @@ const GameFrame = () => {
     let postData = {
       ip_address: geoData?.traits?.ip_address? geoData?.traits?.ip_address : '34834',  
       campaign_name: params?.camp,
+      dailys: dailys
     }
 
     const trackPage = async () => {
