@@ -267,7 +267,7 @@ const GameFrame = () => {
           >
             <h2
               id="modal-title"
-              className="text-3xl font-bold font-sans text-white md:2xl"
+              className="text-3xl font-bold font-sans text-white max-[466px]:text-2xl"
             >
               You've Won 3 Free Slot Spins
             </h2>
