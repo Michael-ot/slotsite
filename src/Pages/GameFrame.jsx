@@ -165,6 +165,10 @@ const GameFrame = () => {
             setRedirectTo("/game");
           } else {
             setShowConfirmModal(true);
+
+            setTimeout(()=>{
+              setShowConfirmModal(false)
+            },2000)
           }
         } else {
           setRequestError("Unexpected response status");
