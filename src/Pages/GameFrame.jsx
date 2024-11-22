@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 const geoip2 = window.geoip2;
 
@@ -21,10 +20,11 @@ const GameFrame = () => {
     unid: '',
     email: '',
   });
-  const [token,setToken] = useState('');
-  const [userid,setUserid] = useState('');
+  const [token, setToken] = useState('');
+  const [userid, setUserid] = useState('');
   const effectRan = useRef(false);
   const registerEffectRan = useRef(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     geoip2.country(
@@ -37,117 +37,86 @@ const GameFrame = () => {
     );
   }, []);
 
-  useEffect(()=>{
-    const urlParams = new URLSearchParams(location.search)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
     let dailys = urlParams.get('dl');
-
-
-  },[])
+  }, []);
 
   useEffect(() => {
-    if (geoData == null ) return;
-    // if(params.camp == "" || params.camp == null) return;
-    if (effectRan.current) return; // Return early if effect has already run once
+    if (geoData == null) return;
+    if (effectRan.current) return;
 
-    // Get the URLSearchParams object from the location search
     const urlParams = new URLSearchParams(location.search);
-
-
-    // Extract the values from the URL
     const camp = urlParams.get('camp');
     const unid = urlParams.get('unid');
     const email = urlParams.get('email');
     let dailys = urlParams.get('dl');
+    let params = { camp, unid, email };
+    setParams({ ...params });
 
-
-    let params = { camp, unid, email }
-    setParams({...params });  
-
-    // const hasValues = camp && unid && email;
-
-    console.log(camp, unid, email);
-
-    // const loadingToast = toast.loading("Loading");
     let postData = {
-      ip_address: geoData?.traits?.ip_address? geoData?.traits?.ip_address : '34834',  
+      ip_address: geoData?.traits?.ip_address ? geoData?.traits?.ip_address : '34834',
       campaign_name: params?.camp,
       dailys: dailys
-    }
+    };
 
     const trackPage = async () => {
       axios.defaults.withCredentials = true;
       return await axios.post(`https://onehubplay.com:8000/api/slot-game-1-visit`, postData);
     };
- 
-   trackPage()
-    .then((resp) => {
-      console.log(resp)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 
-    // if(params?.camp){
-      
-    //   setCancelModal(true);
-    // }
-      
-    effectRan.current = true; // Mark effect as run
-    
-  }, [geoData,params]);
+    trackPage()
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-  useEffect(()=>{
-    if(showModal == true){
+    effectRan.current = true;
+  }, [geoData, params]);
 
-      if (geoData == null ) return;
-      // if(params.camp == "" || params.camp == null) return;
-      if (registerEffectRan.current) return; // Return early if effect has already run once
+  useEffect(() => {
+    if (showModal) {
+      if (geoData == null) return;
+      if (registerEffectRan.current) return;
 
-      // Get the URLSearchParams object from the location search
       const urlParams = new URLSearchParams(location.search);
-
-      // Extract the values from the URL
       const camp = urlParams.get('camp');
       const unid = urlParams.get('unid');
       const email = urlParams.get('email');
 
-      let params = { camp, unid, email }
-      setParams({...params });  
-
-      console.log(camp, unid, email);
+      let params = { camp, unid, email };
+      setParams({ ...params });
 
       let postData = {
-        ip_address: geoData?.traits?.ip_address? geoData?.traits?.ip_address : '34834',  
+        ip_address: geoData?.traits?.ip_address ? geoData?.traits?.ip_address : '34834',
         campaign_name: params?.camp,
-      }
+      };
 
       const trackPage = async () => {
         axios.defaults.withCredentials = true;
         return await axios.post(`https://onehubplay.com:8000/api/slot-game-1-register-visit`, postData);
       };
-  
-    trackPage()
-      .then((resp) => {
-        console.log(resp)
-        // toast.dismiss(loadingToast);
-      })
-      .catch((error) => {
-        console.log(error);
-        // toast.dismiss(loadingToast);
-        // toast.error(error?.message);
-      });
-        
+
+      trackPage()
+        .then((resp) => {
+          console.log(resp);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
       registerEffectRan.current = true;
     }
-  },[showModal])
+  }, [showModal]);
 
   useEffect(() => {
-
     let userToken = localStorage.getItem("token");
-    console.log(JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}"))
-    let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}")
-    setToken(userToken)
-    setUserid(user?.id)
+    let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
+    setToken(userToken);
+    setUserid(user?.id);
+
     const getUserData = () => {
       let userData = localStorage.getItem("user");
       return userData === "null" || userData === null || userData === "";
@@ -175,57 +144,50 @@ const GameFrame = () => {
       camp: params?.camp
     };
 
+    setRequestLoading(true);  // Show loading state when request is sent
+
     axios.defaults.withCredentials = true;
     await axios
-      .post(
-        `https://onehubplay.com:8000/api/slot-machine/register`,
-        postData
-      )
+      .post(`https://onehubplay.com:8000/api/slot-machine/register`, postData)
       .then((response) => {
-        console.log(response);
         setRequestLoading(false);
-
         if (response.data.status === "Success") {
           setShowModal(false);
-
           const isVerified = response.data.data.hasVerified;
-
-          // localStorage.setItem("isVerified", isVerified.toString());
-
           setVerified(isVerified);
 
-          // if (isVerified) {
-            // Save user data and token to localStorage
-            localStorage.setItem(
-              "user",
-              JSON.stringify(response.data.data.user)
-            );
+          if (isVerified) {
+            localStorage.setItem("user", JSON.stringify(response.data.data.user));
             localStorage.setItem("token", response.data.data.token);
-            console.log(response.data.data.token)
-            setToken(response.data.data.token)
             localStorage.setItem("user-id", response.data.data.user.id);
-            console.log("USER ID" + response.data.data.user.id)
-            setUserid(response.data.data.user.id)
+            setToken(response.data.data.token);
+            setUserid(response.data.data.user.id);
             setRedirectTo("/game");
-          // } else {
-          //   setShowConfirmModal(true);
-          // }
+          } else {
+            setShowConfirmModal(true);
+          }
         } else {
           setRequestError("Unexpected response status");
         }
       })
       .catch((error) => {
-        console.error(error);
         setRequestLoading(false);
         setRequestError("Failed to create account");
       });
   };
 
+  // Redirect user if verified
+  useEffect(() => {
+    if (redirectTo) {
+      navigate(redirectTo);
+    }
+  }, [redirectTo, navigate]);
+
   return (
     <div className="h-screen w-screen overflow-hidden relative">
       {isLoading && (
         <div
-          className="absolute inset-0 flex items-center justify-center  z-10 min-h-screen bg-cover bg-center"
+          className="absolute inset-0 flex items-center justify-center z-10 min-h-screen bg-cover bg-center"
           style={{ backgroundImage: "url('/images/backload.png')" }}
         >
           <div className="loader-container">
@@ -233,9 +195,8 @@ const GameFrame = () => {
           </div>
         </div>
       )}
-      {/* <h1>{"https://spintest.vercel.app?token="+token + "&uid="+ userid}</h1>         */}
       <iframe
-        src={"https://spintest.vercel.app?token="+token + "&uid="+ userid}
+        src={"https://spintest.vercel.app?token=" + token + "&uid=" + userid}
         title="Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none hidden md:block"
         allowFullScreen
@@ -245,7 +206,7 @@ const GameFrame = () => {
       ></iframe>
 
       <iframe
-        src={"https://mobileslot.vercel.app/?token="+token}
+        src={"https://mobileslot.vercel.app/?token=" + token + "&uid=" + userid}
         title="Mobile Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none block md:hidden"
         allowFullScreen
@@ -279,9 +240,7 @@ const GameFrame = () => {
             </p>
 
             <form onSubmit={handleSubmit} className="mt-4 text-black">
-              <p className="text-white">
-                Verify Your Email to Claim your spins:
-              </p>
+              <p className="text-white">Verify Your Email to Claim your spins:</p>
               <div className="mb-4 mt-[8px]">
                 <input
                   type="email"
@@ -299,8 +258,9 @@ const GameFrame = () => {
                 style={{
                   backgroundImage: "url('/images/ExtraLongButton.png')",
                 }}
+                disabled={requestLoading}
               >
-                Verify
+                {requestLoading ? "Verifying..." : "Verify"}
               </button>
             </form>
           </div>
@@ -328,10 +288,10 @@ const GameFrame = () => {
               id="confirm-modal-description"
               className="mt-2 text-center text-white"
             >
-              check your email for a confirmation link to verify your account
+              Check your email for a confirmation link to verify your account
               before it expires
               <br />
-              so you can use your 3 free spins to win the jackpot!
+              So you can use your 3 free spins to win the jackpot!
             </p>
           </div>
         </div>
@@ -345,8 +305,8 @@ const GameFrame = () => {
         .spinner {
           width: 50px;
           height: 50px;
-          border: 5px solid #222222; /* Border color */
-          border-top: 5px solid #ffea31; /* Spinner color */
+          border: 5px solid #222222;
+          border-top: 5px solid #ffea31;
           border-radius: 50%;
           animation: spin 1s linear infinite;
         }
