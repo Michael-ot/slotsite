@@ -81,9 +81,9 @@ const Sorry = () => {
           <img src="/images/MessagePanel.png" alt="#" className="absolute" />
           <div className="absolute flex flex-col items-center top-[90px]">
             <p className="text-white text-1xl mb-[10px] w-[80%] text-center">
-              {" "}
-              You have exhausted your spinning credits. Upgrade now to purchase
-              additional credit to win the jackpot
+              {/* You have exhausted your spinning credits. Upgrade now to purchase
+              additional credit to win the jackpot */}
+              Service not available in your location
             </p>
             <Link to={"/"}>
               <button
