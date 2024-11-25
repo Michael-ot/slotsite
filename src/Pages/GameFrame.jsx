@@ -301,7 +301,7 @@ const GameFrame = () => {
         </div>
       )}
 
-      <style jsx>{`
+<style jsx>{`
         .loader-container {
           text-align: center;
         }
