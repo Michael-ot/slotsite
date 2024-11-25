@@ -1,6 +1,4 @@
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import React from "react";
 import { SparklesIcon, MailIcon } from 'lucide-react'
 
 const glowStyle = `
@@ -18,19 +16,19 @@ const glowStyle = `
   }
 `;
 
-export default function JackpotLandingPage() {
+export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative px-4 py-8 sm:py-12 overflow-hidden">
+    <div 
+      className="min-h-screen flex flex-col items-center justify-center relative px-4 py-8 sm:py-12 overflow-hidden" 
+      style={{
+        backgroundImage: 'url(https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tm_ohp_39042_Create_a_visually_striking_landing_page_in_lands_0c4a695e-9293-473a-b4f9-6d772ca2fdac_0-Ut19Pv7asf1260iWa1Khk3dmX5hu6M.png)',
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <style dangerouslySetInnerHTML={{ __html: glowStyle }} />
-      <Image
-        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tm_ohp_39042_Create_a_visually_striking_landing_page_in_lands_0c4a695e-9293-473a-b4f9-6d772ca2fdac_0-Ut19Pv7asf1260iWa1Khk3dmX5hu6M.png"
-        alt="Jackpot background"
-        fill
-        style={{ objectFit: 'cover' }}
-        quality={100}
-        priority
-        crossOrigin="anonymous"
-      />
+      
       <div className="absolute inset-0 bg-black/30 bg-opacity-30" style={{ backdropFilter: 'blur(4px)' }} aria-hidden="true" />
       
       <header className="text-center mb-8 sm:mb-12 relative z-10">
@@ -49,7 +47,7 @@ export default function JackpotLandingPage() {
           <form className="space-y-3 sm:space-y-4" onSubmit={(e) => e.preventDefault()}>
             <div className="flex items-center space-x-2">
               <MailIcon className="text-gray-300 w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
-              <Input 
+              <input
                 type="email" 
                 placeholder="Enter your email" 
                 className="flex-grow bg-white/10 border-white/20 text-white placeholder-gray-300 text-sm sm:text-base"
@@ -57,12 +55,12 @@ export default function JackpotLandingPage() {
                 aria-label="Email address"
               />
             </div>
-            <Button 
+            <button 
               type="submit"
               className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 sm:py-3 rounded-full text-lg sm:text-xl shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
               Get Your Free Spins!
-            </Button>
+            </button>
           </form>
         </div>
 
@@ -91,4 +89,3 @@ export default function JackpotLandingPage() {
     </div>
   )
 }
-
