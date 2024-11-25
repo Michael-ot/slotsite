@@ -11,12 +11,13 @@ import Amount from "./Pages/Amount";
 import Payment from "./Pages/Payment";
 import GameFrame from "./Pages/GameFrame";
 import LoadingPage from "./Pages/LoadingPage";
-
+import Suscribe from "./Pages/Suscribe";
+import LandingPage from "./Pages/LandingPage";
 function App() {
   return (
     < Router>
       <Routes>
-      <Route path="/" element={<GameFrame/>} />
+      <Route path="/" element={<LandingPage/>} />
       <Route path="/game" element={<GameFrame />} />
         <Route path="/amount" element={<Amount />} />
         <Route path="/verify" element={<LoadingPage />} />
