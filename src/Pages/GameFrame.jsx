@@ -6,13 +6,13 @@ const geoip2 = window.geoip2;
 
 const GameFrame = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [redirectTo, setRedirectTo] = useState(null);
-  const [email, setEmail] = useState("");
-  const [verified, setVerified] = useState(false);
-  const [requestLoading, setRequestLoading] = useState(false);
-  const [requestError, setRequestError] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
+  // const [showConfirmModal, setShowConfirmModal] = useState(false);
+  // const [redirectTo, setRedirectTo] = useState(null);
+  // const [email, setEmail] = useState("");
+  // const [verified, setVerified] = useState(false);
+  // const [requestLoading, setRequestLoading] = useState(false);
+  // const [requestError, setRequestError] = useState(false);
   const location = useLocation();
   const [geoData, setGeoData] = useState(null);
   const [params, setParams] = useState({
@@ -24,7 +24,7 @@ const GameFrame = () => {
   const [userid, setUserid] = useState('');
   const effectRan = useRef(false);
   const registerEffectRan = useRef(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     geoip2.country(
@@ -76,116 +76,116 @@ const GameFrame = () => {
     effectRan.current = true;
   }, [geoData, params]);
 
-  useEffect(() => {
-    if (showModal) {
-      if (geoData == null) return;
-      if (registerEffectRan.current) return;
+  // useEffect(() => {
+  //   if (showModal) {
+  //     if (geoData == null) return;
+  //     if (registerEffectRan.current) return;
 
-      const urlParams = new URLSearchParams(location.search);
-      const camp = urlParams.get('camp');
-      const unid = urlParams.get('unid');
-      const email = urlParams.get('email');
+  //     const urlParams = new URLSearchParams(location.search);
+  //     const camp = urlParams.get('camp');
+  //     const unid = urlParams.get('unid');
+  //     const email = urlParams.get('email');
 
-      let params = { camp, unid, email };
-      setParams({ ...params });
+  //     let params = { camp, unid, email };
+  //     setParams({ ...params });
 
-      let postData = {
-        ip_address: geoData?.traits?.ip_address ? geoData?.traits?.ip_address : '34834',
-        campaign_name: params?.camp,
-      };
+  //     let postData = {
+  //       ip_address: geoData?.traits?.ip_address ? geoData?.traits?.ip_address : '34834',
+  //       campaign_name: params?.camp,
+  //     };
 
-      const trackPage = async () => {
-        axios.defaults.withCredentials = true;
-        return await axios.post(`https://onehubplay.com:8000/api/slot-game-1-register-visit`, postData);
-      };
+  //     const trackPage = async () => {
+  //       axios.defaults.withCredentials = true;
+  //       return await axios.post(`https://onehubplay.com:8000/api/slot-game-1-register-visit`, postData);
+  //     };
 
-      trackPage()
-        .then((resp) => {
-          console.log(resp);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+  //     trackPage()
+  //       .then((resp) => {
+  //         console.log(resp);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
 
-      registerEffectRan.current = true;
-    }
-  }, [showModal]);
+  //     registerEffectRan.current = true;
+  //   }
+  // }, [showModal]);
 
-  useEffect(() => {
-    let userToken = localStorage.getItem("token");
-    let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
-    setToken(userToken);
-    setUserid(user?.id);
+  // useEffect(() => {
+  //   let userToken = localStorage.getItem("token");
+  //   let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
+  //   setToken(userToken);
+  //   setUserid(user?.id);
 
-    const getUserData = () => {
-      let userData = localStorage.getItem("user");
-      return userData === "null" || userData === null || userData === "";
-    };
+  //   const getUserData = () => {
+  //     let userData = localStorage.getItem("user");
+  //     return userData === "null" || userData === null || userData === "";
+  //   };
 
-    const timer = setTimeout(() => {
-      if (getUserData() && !showConfirmModal) {
-        setShowModal(true);
-      }
-    }, 15000);
+  //   const timer = setTimeout(() => {
+  //     if (getUserData() && !showConfirmModal) {
+  //       setShowModal(true);
+  //     }
+  //   }, 15000);
 
-    const hasUserData = getUserData();
-    if (!hasUserData) {
-      setShowModal(false);
-    }
+  //   const hasUserData = getUserData();
+  //   if (!hasUserData) {
+  //     setShowModal(false);
+  //   }
 
-    return () => clearTimeout(timer);
-  }, [showConfirmModal]);
+  //   return () => clearTimeout(timer);
+  // }, [showConfirmModal]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    let postData = {
-      email: email,
-      camp: params?.camp
-    };
+  //   let postData = {
+  //     email: email,
+  //     camp: params?.camp
+  //   };
 
-    setRequestLoading(true);  // Show loading state when request is sent
+    // setRequestLoading(true);  // Show loading state when request is sent
 
-    axios.defaults.withCredentials = true;
-    await axios
-      .post(`https://onehubplay.com:8000/api/slot-machine/register`, postData)
-      .then((response) => {
-        setRequestLoading(false);
-        if (response.data.status === "Success") {
-          setShowModal(false);
-          const isVerified = response.data.data.hasVerified;
-          setVerified(isVerified);
+  //   axios.defaults.withCredentials = true;
+  //   await axios
+  //     .post(`https://onehubplay.com:8000/api/slot-machine/register`, postData)
+  //     .then((response) => {
+  //       setRequestLoading(false);
+  //       if (response.data.status === "Success") {
+  //         setShowModal(false);
+  //         const isVerified = response.data.data.hasVerified;
+  //         setVerified(isVerified);
 
-          if (isVerified) {
-            localStorage.setItem("user", JSON.stringify(response.data.data.user));
-            localStorage.setItem("token", response.data.data.token);
-            localStorage.setItem("user-id", response.data.data.user.id);
-            setToken(response.data.data.token);
-            setUserid(response.data.data.user.id);
-            setRedirectTo("/game");
-          } else {
-            setShowConfirmModal(true);
+  //         if (isVerified) {
+  //           localStorage.setItem("user", JSON.stringify(response.data.data.user));
+  //           localStorage.setItem("token", response.data.data.token);
+  //           localStorage.setItem("user-id", response.data.data.user.id);
+  //           setToken(response.data.data.token);
+  //           setUserid(response.data.data.user.id);
+  //           setRedirectTo("/game");
+  //         } else {
+  //           setShowConfirmModal(true);
 
-            setTimeout(()=>{
-              setShowConfirmModal(false)
-            },2000)
-          }
-        } else {
-          setRequestError("Unexpected response status");
-        }
-      })
-      .catch((error) => {
-        setRequestLoading(false);
-        setRequestError("Failed to create account");
-      });
-  };
+  //           setTimeout(()=>{
+  //             setShowConfirmModal(false)
+  //           },2000)
+  //         }
+  //       } else {
+  //         setRequestError("Unexpected response status");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       setRequestLoading(false);
+  //       setRequestError("Failed to create account");
+  //     });
+  // };
 
-  // Redirect user if verified
-  useEffect(() => {
-    if (redirectTo) {
-      navigate(redirectTo);
-    }
-  }, [redirectTo, navigate]);
+  // // Redirect user if verified
+  // useEffect(() => {
+  //   if (redirectTo) {
+  //     navigate(redirectTo);
+  //   }
+  // }, [redirectTo, navigate]);
 
   return (
     <div className="h-screen w-screen overflow-hidden relative">
@@ -219,7 +219,7 @@ const GameFrame = () => {
         }}
       ></iframe>
 
-      {showModal && !showConfirmModal && (
+      {/* {showModal && !showConfirmModal && (
         <div
           className="fixed inset-0 flex items-center justify-center h-auto bg-black bg-opacity-50 z-20"
           role="dialog"
@@ -269,9 +269,9 @@ const GameFrame = () => {
             </form>
           </div>
         </div>
-      )}
+      )} */}
 
-      {showConfirmModal && (
+      {/* {showConfirmModal && (
         <div
           className="fixed inset-0 flex items-center justify-center h-auto bg-black bg-opacity-50 z-30"
           role="dialog"
@@ -299,7 +299,7 @@ const GameFrame = () => {
             </p>
           </div>
         </div>
-      )}
+      )} */}
 
 <style jsx>{`
         .loader-container {

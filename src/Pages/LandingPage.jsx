@@ -19,23 +19,6 @@ const glowStyle = `
     -webkit-animation: glow 2s ease-in-out infinite;
     animation: glow 2s ease-in-out infinite;
   }
-
-  /* CSS for the loader */
-  .loader {
-    border: 2px solid transparent;
-    border-top: 2px solid #fff;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
 `;
 
 export default function LandingPage() {
@@ -90,7 +73,7 @@ export default function LandingPage() {
     const trackPage = async () => {
       axios.defaults.withCredentials = true;
       return await axios.post(
-        `https://onehubplay.com:8000/api/slot-game-1-visit`,
+        `https://onehubplay.com:8000/api/slot-game-1-register-visit`,
         postData
       );
     };
@@ -144,7 +127,35 @@ export default function LandingPage() {
         setRequestError("Failed to create account");
       });
   };
+  useEffect(() => {
+    if (redirectTo) {
+      navigate(redirectTo);
+    }
+  }, [redirectTo, navigate]);
 
+  // useEffect(() => {
+  //   let userToken = localStorage.getItem("token");
+  //   let user = JSON.parse(
+  //     localStorage.getItem("user") ? localStorage.getItem("user") : "{}"
+  //   );
+  //   setToken(userToken);
+  //   setUserid(user?.id);
+
+  //   // const getUserData = () => {
+  //   //   let userData = localStorage.getItem("user");
+  //   //   return userData === "null" || userData === null || userData === "";
+  //   // };
+
+  //   // const hasUserData =  getUserData();
+  //   // if (!hasUserData){
+  //   //   setRedirectTo("/game");
+  //   // }
+  // }, []);
+  useEffect(() => {
+    if (redirectTo) {
+      navigate(redirectTo);
+    }
+  }, [redirectTo, navigate]);
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center relative px-4 py-8 sm:py-12 overflow-hidden"
@@ -190,7 +201,7 @@ export default function LandingPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-grow bg-white/10 border-white/20 text-white placeholder-gray-300 text-sm sm:text-base"
+                className="flex-grow bg-white/10 border-white/20 text-white placeholder-gray-300 text-sm sm:text-base p-[5px]"
                 required
                 aria-label="Email address"
                 id="email"
@@ -200,13 +211,10 @@ export default function LandingPage() {
             </div>
             <button
               type="submit"
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 sm:py-3 rounded-full text-lg sm:text-xl shadow-lg transform hover:scale-105 transition-transform duration-300 relative"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 sm:py-3 rounded-full text-lg sm:text-xl shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
-              {isLoading ? (
-                <span className="loader"></span> // Display loader spinner
-              ) : (
-                "Get Your Free Spins!"
-              )}
+              {isLoading ? "Loading..." : "Get Your Free Spins!"}{" "}
+              {/* Change to "Loading..." text */}
             </button>
           </form>
         </div>
@@ -236,39 +244,11 @@ export default function LandingPage() {
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">
             How to Win:
           </h3>
-          <ol className="list-decimal list-inside text-left mx-auto text-white/90 text-sm sm:text-base">
-            <li className="mb-1 sm:mb-2">Sign up with your email</li>
-            <li className="mb-1 sm:mb-2">Collect your daily free spins</li>
-            <li className="mb-1 sm:mb-2">
-              Spin the reels on our exciting slot machines
-            </li>
-            <li className="mb-1 sm:mb-2">Match the winning symbols</li>
-            <li>Celebrate your massive $1,000,000 win!</li>
-          </ol>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">
+            Sign up, collect daily spins, and you could be the next winner!
+          </p>
         </div>
       </section>
-
-      <style jsx>{`
-        .loader {
-          border: 2px solid transparent;
-          border-top: 2px solid #fff;
-          border-radius: 50%;
-          width: 20px;
-          height: 20px;
-          animation: spin .1s linear infinite;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style>
     </div>
   );
 }
