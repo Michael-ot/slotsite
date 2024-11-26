@@ -104,6 +104,13 @@ export default function LandingPage() {
       .then((response) => {
         setIsLoading(false); // Set loading state to false
         if (response.data.status === "Success") {
+          console.log("REDIRECT1")
+          setRedirectTo("/game");
+          localStorage.setItem("token", response.data.data.token);
+          localStorage.setItem("user-id", response.data.data.user.id);
+          setToken(response.data.data.token);
+          setUserid(response.data.data.user.id);
+
           const isVerified = response.data.data.hasVerified;
           setVerified(isVerified);
 
@@ -112,11 +119,12 @@ export default function LandingPage() {
               "user",
               JSON.stringify(response.data.data.user)
             );
-            localStorage.setItem("token", response.data.data.token);
-            localStorage.setItem("user-id", response.data.data.user.id);
-            setToken(response.data.data.token);
-            setUserid(response.data.data.user.id);
-            setRedirectTo("/game");
+            console.log("REDIRECT2")
+            // localStorage.setItem("token", response.data.data.token);
+            // localStorage.setItem("user-id", response.data.data.user.id);
+            // setToken(response.data.data.token);
+            // setUserid(response.data.data.user.id);
+            // setRedirectTo("/game");
           }
         } else {
           setRequestError("Unexpected response status");
@@ -151,11 +159,11 @@ export default function LandingPage() {
   //   //   setRedirectTo("/game");
   //   // }
   // }, []);
-  useEffect(() => {
-    if (redirectTo) {
-      navigate(redirectTo);
-    }
-  }, [redirectTo, navigate]);
+  // useEffect(() => {
+  //   if (redirectTo) {
+  //     navigate(redirectTo);
+  //   }
+  // }, [redirectTo, navigate]);
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center relative px-4 py-8 sm:py-12 overflow-hidden"
