@@ -92,7 +92,7 @@ const Sorry = () => {
                   backgroundImage: "url('/images/ExtraLongButton.png')",
                 }}
               >
-                Back
+                buy coins
               </button>
             </Link>
           </div>
