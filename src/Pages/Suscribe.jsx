@@ -1,7 +1,15 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Suscribe = () => {
+  // const [loading, setLoading] = useState(false);
+  // const [token, setToken] = useState(null);
+
+  const navigate = useNavigate();
+
+ 
   const [formControls, setFormControls] = useState({
     firstName: "",
     lastName: "",
@@ -9,10 +17,47 @@ const Suscribe = () => {
     exp_date_m: "",
     exp_date_y: "",
     cvv: "",
-    user_id: "",
-    agree: false,
   });
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+
+ const token = localStorage.getItem("token");
+    console.log("Stored token:", token);
+    e.preventDefault();
+
+    let postData = {
+      ...formControls,
+    };
+
+    postData = {
+      ...postData,
+      first_name: formControls?.firstName,
+      last_name: formControls?.lastName,
+      card_number: formControls?.card,
+    };
+    console.log(postData);
+
+    try {
+      const response = await axios.post(
+        `https://onehubplay.com:8000/api/saveCard`,
+        postData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log(response);
+
+      setFormControls({
+        firstName: "",
+        lastName: "",
+        card: "",
+        exp_date_m: "",
+        exp_date_y: "",
+        cvv: "",
+      });
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
 
   return (
     <>
@@ -20,11 +65,17 @@ const Suscribe = () => {
         className="flex items-center justify-center min-h-screen bg-cover bg-center"
         style={{ backgroundImage: "url('/images/Background_1.png')" }}
       >
-        <div className="bg-[#24334B] w-[25%] h-[500px] p-[20px] flex items-center justify-center">
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="bg-[#24334B] w-[360px] h-[500px] p-[20px] flex flex-col items-center justify-center rounded"
+        >
+          <h1 className="text-white block text-3xl mb-[70px] font-extrabold	 font-medium spacing-[5px]">
+            Buy More Coins
+          </h1>
           <div className="bg-transparent px-4 py-2">
             <div className="grid grid-cols-2 gap-x-[15px]">
               <div className="mb-[10px]">
-                <label className="mb-[5px] text-gray-500 block text-xs font-semibold">
+                <label className="mb-[5px] text-white block text-xs font-semibold">
                   First Name
                 </label>
                 <input
@@ -36,11 +87,11 @@ const Suscribe = () => {
                       firstName: e.target.value,
                     })
                   }
-                  className="h-[30px] bg-transparent border border-gray-400 block rounded w-full mb-[5px] px-[5px]"
+                  className="h-[30px] bg-white border border-gray-400 block rounded w-full mb-[5px] px-[5px]"
                 />
               </div>
               <div className="mb-[10px]">
-                <label className="mb-[5px] text-gray-500 block text-xs font-semibold">
+                <label className="mb-[5px] text-white block text-xs font-semibold">
                   Last Name
                 </label>
                 <input
@@ -52,23 +103,23 @@ const Suscribe = () => {
                       lastName: e.target.value,
                     })
                   }
-                  className="h-[30px] bg-transparent border border-gray-400 block rounded w-full mb-[5px] px-[5px]"
+                  className="h-[30px] bg-white border border-gray-400 block rounded w-full mb-[5px] px-[5px]"
                 />
               </div>
             </div>
             <div className="mb-[10px]">
               <div className=" mb-[5px] flex justify-between items-center">
-                <label className=" text-gray-500 block text-xs font-semibold">
+                <label className=" text-white block text-xs font-semibold">
                   Credit Card Number
                 </label>
                 <div className="flex gap-x-[5px]">
                   <img
                     className="h-[10px] object-cover"
-                    src="/assets/Images/visa.png"
+                    src="images/visa.png"
                   />
                   <img
                     className="h-[10px] object-cover"
-                    src="/assets/Images/mcard.png"
+                    src="images/mcard.png"
                   />
                 </div>
               </div>
@@ -80,12 +131,12 @@ const Suscribe = () => {
                 onChange={(e) =>
                   setFormControls({ ...formControls, card: e.target.value })
                 }
-                className="h-[30px] bg-transparent border border-gray-400 block rounded w-full mb-[5px] px-[5px]"
+                className="h-[30px] bg-white border border-gray-400 block rounded w-full mb-[5px] px-[5px]"
               />
             </div>
             <div className="grid grid-cols-3 gap-x-[15px]">
               <div className="mb-[10px]">
-                <label className="mb-[5px] text-gray-500 block text-xs font-semibold">
+                <label className="mb-[5px] text-white block text-xs font-semibold">
                   Expiration Date
                 </label>
                 <select
@@ -97,7 +148,7 @@ const Suscribe = () => {
                       exp_date_m: e.target.value,
                     })
                   }
-                  className="h-[30px] bg-transparent border border-gray-400 block rounded w-full mb-[5px]"
+                  className="h-[30px] bg-white border border-gray-400 block rounded w-full mb-[5px]"
                 >
                   <option>MM</option>
                   <option value="01">01</option>
@@ -115,7 +166,7 @@ const Suscribe = () => {
                 </select>
               </div>
               <div className="mb-[10px]">
-                <label className="mb-[5px] text-gray-500 block text-xs font-semibold invisible">
+                <label className="mb-[5px] text-white block text-xs font-semibold invisible">
                   {" "}
                   d
                 </label>
@@ -128,7 +179,7 @@ const Suscribe = () => {
                       exp_date_y: e.target.value,
                     })
                   }
-                  className="h-[30px] bg-transparent border border-gray-400 block rounded w-full mb-[5px]"
+                  className="h-[30px] bg-white border border-gray-400 block rounded w-full mb-[5px]"
                 >
                   <option>YY</option>
                   <option value="23">23</option>
@@ -146,7 +197,7 @@ const Suscribe = () => {
                 </select>
               </div>
               <div className="mb-[10px]">
-                <label className="mb-[5px] text-gray-500 block text-xs font-semibold">
+                <label className="mb-[5px] text-white block text-xs font-semibold">
                   CVV
                 </label>
                 <input
@@ -156,12 +207,12 @@ const Suscribe = () => {
                   onChange={(e) =>
                     setFormControls({ ...formControls, cvv: e.target.value })
                   }
-                  className="h-[30px] bg-transparent border border-gray-400 block rounded w-full mb-[5px] px-[5px]"
+                  className="h-[30px] bg-white border border-gray-400 block rounded w-full mb-[5px] px-[5px]"
                 />
               </div>
             </div>
-          
-            {loading ? (
+
+            {/* {loading ? (
               <button
                 type="button"
                 className=" bg-[#18AD58] px-[50px] py-[10px] text-2xl rounded-full text-white font-bold uppercase block mx-auto"
@@ -171,16 +222,16 @@ const Suscribe = () => {
                   src={"/assets/Images/Eclipse-1s-200px.svg"}
                 ></img>
               </button>
-            ) : (
-              <button
-                type="submit"
-                className=" block bg-[#18AD58] px-[40px] py-[5px] text-[20px]  rounded-full mx-auto text-white font-semibold uppercase mt-[20px]"
-              >
-                ACCESS NOW
-              </button>
-            )}
+            ) : ( */}
+            <button
+              type="submit"
+              className=" block bg-[#F8EB46] px-[40px] py-[5px] text-[20px]  rounded-full mx-auto text-black font-semibold uppercase mt-[20px]"
+            >
+              ACCESS NOW
+            </button>
+            {/* // )} */}
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

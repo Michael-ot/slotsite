@@ -85,7 +85,7 @@ const Sorry = () => {
               additional credit to win the jackpot */}
               Service not available in your location
             </p>
-            <Link to={"/"}>
+            <Link to={"/buy-coins"}>
               <button
                 className="w-full text-black my-[20px] py-2 px-4 rounded-md bg-100% h-[40px] bg-no-repeat bg-center"
                 style={{

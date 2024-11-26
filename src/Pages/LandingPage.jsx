@@ -104,7 +104,7 @@ export default function LandingPage() {
       .then((response) => {
         setIsLoading(false); // Set loading state to false
         if (response.data.status === "Success") {
-          console.log("REDIRECT1")
+          // console.log("REDIRECT1")
           setRedirectTo("/game");
           localStorage.setItem("token", response.data.data.token);
           localStorage.setItem("user-id", response.data.data.user.id);
@@ -119,7 +119,7 @@ export default function LandingPage() {
               "user",
               JSON.stringify(response.data.data.user)
             );
-            console.log("REDIRECT2")
+            // console.log("REDIRECT2")
             // localStorage.setItem("token", response.data.data.token);
             // localStorage.setItem("user-id", response.data.data.user.id);
             // setToken(response.data.data.token);

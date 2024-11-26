@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Amount = () => {
@@ -15,7 +16,7 @@ const Amount = () => {
   const handleAmountClick = async (amount) => {
     setSelectedAmount(amount);
     console.log(`Selected amount: ${amount}`);
-    
+
     const token = localStorage.getItem("token");
     setError(null);
 
@@ -23,16 +24,15 @@ const Amount = () => {
       const response = await axios.post(
         "https://onehubplay.com:8000/api",
         { amount },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       console.log("Response from server:", response.data);
-      const paymentLink = response.data.data.paymentLink; 
+      const paymentLink = response.data.data.paymentLink;
       if (paymentLink) {
         window.location.href = paymentLink;
       }
     } catch (error) {
-      
       console.error("Error sending amount:", error);
       setError("Failed to send amount. Please try again.");
     }

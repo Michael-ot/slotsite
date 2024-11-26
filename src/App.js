@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import LOGIN from "./Pages/login";
 import Signup from "./Pages/Signup";
@@ -22,19 +27,20 @@ function App() {
 
     const hasUserData = getUserData();
     if (hasUserData) {
-      setRedirectTo("/game"); 
+      setRedirectTo("/game");
     } else {
-      setRedirectTo("/"); 
+      setRedirectTo("/");
     }
   }, []);
 
   return (
     <Router>
       <Routes>
-
         {redirectTo === "/" && <Route path="/" element={<LandingPage />} />}
-        {redirectTo === "/game" && <Route path="/" element={<Navigate to="/game" replace/>} />}
-
+        {redirectTo === "/game" && (
+          <Route path="/" element={<Navigate to="/game" replace />} />
+        )}
+        <Route path="/buy-coins" element={<Suscribe />} />
         <Route path="/game" element={<GameFrame />} />
         <Route path="/amount" element={<Amount />} />
         <Route path="/verify" element={<LoadingPage />} />
