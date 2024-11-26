@@ -67,7 +67,7 @@ const Suscribe = () => {
       >
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="bg-[#24334B] w-[360px] h-[500px] p-[20px] flex flex-col items-center justify-center rounded"
+          className="bg-[#24334B] w-[410px] h-[550px] p-[10px] flex flex-col items-center justify-center rounded"
         >
           <h1 className="text-white block text-3xl mb-[70px] font-extrabold	 font-medium spacing-[5px]">
             Buy More Coins
