@@ -24,7 +24,21 @@ const GameFrame = () => {
   const [userid, setUserid] = useState('');
   const effectRan = useRef(false);
   const registerEffectRan = useRef(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    // Get the token and user id from localStorage
+    let userToken = localStorage.getItem("token");
+    let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
+    setToken(userToken);
+    setUserid(user?.id);
+
+    // If token or user id is empty, redirect to landing page
+    if (!userToken || !user?.id) {
+      navigate('/landing');
+    }
+  }, [location, navigate]);
 
   useEffect(() => {
     geoip2.country(
