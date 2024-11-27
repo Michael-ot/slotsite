@@ -67,7 +67,7 @@ const Suscribe = () => {
       >
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="bg-[#24334B] w-[410px] h-[550px] p-[10px] flex flex-col items-center justify-center rounded"
+          className="bg-[#24334B] w-full lg:w-[510px]  h-[550px] p-[10px] flex flex-col items-center justify-center rounded"
         >
           <h1 className="text-white block text-3xl mb-[70px] font-extrabold	 font-medium spacing-[5px]">
             Buy More Coins
@@ -227,7 +227,7 @@ const Suscribe = () => {
               type="submit"
               className=" block bg-[#F8EB46] px-[40px] py-[5px] text-[20px]  rounded-full mx-auto text-black font-semibold uppercase mt-[20px]"
             >
-              ACCESS NOW
+              BUY NOW
             </button>
             {/* // )} */}
           </div>
