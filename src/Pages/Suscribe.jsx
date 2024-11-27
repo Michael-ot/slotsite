@@ -23,6 +23,7 @@ const Suscribe = () => {
   const handleSubmit = async (e) => {
 
  const token = localStorage.getItem("token");
+ let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
     console.log("Stored token:", token);
     e.preventDefault();
 
@@ -35,6 +36,7 @@ const Suscribe = () => {
       first_name: formControls?.firstName,
       last_name: formControls?.lastName,
       card_number: formControls?.card,
+      user_id: user?.id,
     };
     console.log(postData);
 
@@ -54,6 +56,7 @@ const Suscribe = () => {
         exp_date_y: "",
         cvv: "",
       });
+      navigate('/game')
     } catch (error) {
       console.error("API request error:", error);
     }
