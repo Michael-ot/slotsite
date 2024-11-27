@@ -1,8 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Suscribe = () => {
+
+  const geoip2 = window.geoip2;
+
+  const [geoData, setGeoData] = useState(null);
+  const [uid, setUid] = useState(null);
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    geoip2.country(
+      (response1) => {
+        setGeoData(response1);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    setUid(localStorage.getItem("user"));
+    if (geoData == null) return;
+
+    if (effectRan.current) return; // Return early if effect has already run once
+
+    let postData = {
+      ip_address: geoData?.traits?.ip_address
+        ? geoData?.traits?.ip_address
+        : "34834",
+    };
+
+    const trackPage = async () => {
+      axios.defaults.withCredentials = true;
+      return await axios.post(
+        `https://onehubplay.com:8000/api/slot-game-1-cards`,
+        postData
+      );
+    };
+
+    trackPage()
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    effectRan.current = true; // Mark effect as run
+  }, [geoData]);
+
   const [formControls, setFormControls] = useState({
     firstName: "",
     lastName: "",
@@ -11,12 +60,14 @@ const Suscribe = () => {
     exp_date_y: "",
     cvv: "",
   });
-  const [loading, setLoading] = useState(false);  // Add loading state
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     const token = localStorage.getItem("token");
-    let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
+    let user = JSON.parse(
+      localStorage.getItem("user") ? localStorage.getItem("user") : "{}"
+    );
     console.log("Stored token:", token);
     console.log("Stored user:", user);
     e.preventDefault();
@@ -221,7 +272,7 @@ const Suscribe = () => {
           <button
             type="submit"
             className="block bg-[#15803D] px-[40px] py-[5px] text-[20px] rounded-full mx-auto text-white font-semibold uppercase mt-[7px]"
-            disabled={loading}  // Disable button while loading
+            disabled={loading} // Disable button while loading
           >
             {loading ? "Processing..." : "Buy 100 credits for $1.99"}
           </button>
