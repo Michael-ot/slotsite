@@ -230,7 +230,7 @@ const Suscribe = () => {
             <p className="text-center text-[20px] text-white mt-[20px]">Win the Jackpot!</p>
             <button
               type="submit"
-              className=" block bg-[#F8EB46] px-[40px] py-[5px] text-[20px]  rounded-full mx-auto text-black font-semibold uppercase mt-[7px]"
+              className=" block bg-[#15803D] px-[40px] py-[5px] text-[20px]  rounded-full mx-auto text-white font-semibold uppercase mt-[7px]"
             >
               Buy 100 credits for $1.99
             </button>
