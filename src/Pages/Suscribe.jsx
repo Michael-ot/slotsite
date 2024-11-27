@@ -9,7 +9,6 @@ const Suscribe = () => {
 
   const navigate = useNavigate();
 
- 
   const [formControls, setFormControls] = useState({
     firstName: "",
     lastName: "",
@@ -21,9 +20,10 @@ const Suscribe = () => {
   // const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-
- const token = localStorage.getItem("token");
- let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
+    const token = localStorage.getItem("token");
+    let user = JSON.parse(
+      localStorage.getItem("user") ? localStorage.getItem("user") : "{}"
+    );
     console.log("Stored token:", token);
     // console.log(localStorage.getItem("user"))
     e.preventDefault();
@@ -57,7 +57,7 @@ const Suscribe = () => {
         exp_date_y: "",
         cvv: "",
       });
-      navigate('/game')
+      navigate("/game");
     } catch (error) {
       console.error("API request error:", error);
     }
@@ -71,11 +71,17 @@ const Suscribe = () => {
       >
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="bg-[#24334B] w-full lg:w-[510px]  h-[550px] p-[10px] flex flex-col items-center justify-center rounded"
+          className="bg-[#24334B] w-full lg:w-[510px]  h-[570px] p-[10px] flex flex-col items-center justify-center rounded"
         >
-          <h1 className="text-white block text-3xl mb-[70px] font-extrabold	 font-medium spacing-[5px]">
-            Buy More Coins
+          <h1 className="text-white block text-3xl mb-[10px] font-extrabold	 font-medium spacing-[5px]">
+            Win the Jackpot!
           </h1>
+          <h3 className="text-white text-[20px]">1,000,000 USD</h3>
+          <video autoPlay muted loop className="w-[150px]">
+            <source src="images/mini2.webm" type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
+          <img src="" alt="" />
           <div className="bg-transparent px-4 py-2">
             <div className="grid grid-cols-2 gap-x-[15px]">
               <div className="mb-[10px]">
@@ -227,7 +233,9 @@ const Suscribe = () => {
                 ></img>
               </button>
             ) : ( */}
-            <p className="text-center text-[20px] text-white mt-[20px]">Win the Jackpot!</p>
+            <p className="text-center text-[19px] text-white mt-[20px]">
+           Buy More Credits
+            </p>
             <button
               type="submit"
               className=" block bg-[#15803D] px-[40px] py-[5px] text-[20px]  rounded-full mx-auto text-white font-semibold uppercase mt-[7px]"
