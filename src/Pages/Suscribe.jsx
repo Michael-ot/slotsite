@@ -227,11 +227,12 @@ const Suscribe = () => {
                 ></img>
               </button>
             ) : ( */}
+            <p className="text-center text-[20px] text-white mt-[20px]">Win the Jackpot!</p>
             <button
               type="submit"
-              className=" block bg-[#F8EB46] px-[40px] py-[5px] text-[20px]  rounded-full mx-auto text-black font-semibold uppercase mt-[20px]"
+              className=" block bg-[#F8EB46] px-[40px] py-[5px] text-[20px]  rounded-full mx-auto text-black font-semibold uppercase mt-[7px]"
             >
-              BUY NOW
+              Buy 100 credits for $1.99
             </button>
             {/* // )} */}
           </div>
