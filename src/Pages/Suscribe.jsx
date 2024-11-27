@@ -25,6 +25,7 @@ const Suscribe = () => {
  const token = localStorage.getItem("token");
  let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
     console.log("Stored token:", token);
+    // console.log(localStorage.getItem("user"))
     e.preventDefault();
 
     let postData = {
