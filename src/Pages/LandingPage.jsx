@@ -105,8 +105,9 @@ export default function LandingPage() {
         setIsLoading(false); // Set loading state to false
         if (response.data.status === "Success") {
           // console.log("REDIRECT1")
-          setRedirectTo("/game");
+          setRedirectTo("/buy-coins");
           localStorage.setItem("token", response.data.data.token);
+          localStorage.setItem('user',JSON.stringify(response.data.data.user));
           localStorage.setItem("user-id", response.data.data.user.id);
           setToken(response.data.data.token);
           setUserid(response.data.data.user.id);
