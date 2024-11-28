@@ -8,8 +8,29 @@ const geoip2 = window.geoip2;
 const Sorry = () => {
   const location = useLocation();
   const [geoData, setGeoData] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState('/images/Background_1.png');
 
   const effectRan = useRef(false);
+
+
+  useEffect(() => {
+    // Detect screen size on window resize
+    const updateBackgroundImage = () => {
+      if (window.innerWidth <= 500) {
+        setBackgroundImage('/images/Background_2.png'); // Mobile background image
+      } else {
+        setBackgroundImage('/images/Background_1.png'); // Default background image
+      }
+    };
+
+    // Run the function on mount and when the window is resized
+    window.addEventListener('resize', updateBackgroundImage);
+    updateBackgroundImage(); // Set initial background image based on the screen size
+
+    return () => {
+      window.removeEventListener('resize', updateBackgroundImage);
+    };
+  }, []);
 
   useEffect(() => {
     geoip2.country(
@@ -73,16 +94,17 @@ const Sorry = () => {
 
   return (
     <>
-      <div
-        className="flex items-center justify-center min-h-screen bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/Background_1.png')" }}
-      >
+    <div
+    className="relative min-h-screen bg-cover bg-center flex justify-center items-center"
+    style={{
+      backgroundImage: `url(${backgroundImage})`, // Dynamically set background image
+    }}
+  >  
         <div className="w-96 h-96 relative flex flex-col items-center">
           <img src="/images/MessagePanel.png" alt="#" className="absolute" />
           <div className="absolute flex flex-col items-center top-[90px]">
             <p className="text-white text-1xl mb-[10px] w-[80%] text-center">
-              You have exhausted your spinning credits. Upgrade now to purchase
-              additional credit to win the jackpot
+              You have exhausted your spinning credits. Purchase addditional credits to win the jackpot
               {/* Service not available in your location */}
             </p>
             <Link to={"/buy-coins"}>
@@ -92,7 +114,7 @@ const Sorry = () => {
                   backgroundImage: "url('/images/ExtraLongButton.png')",
                 }}
               >
-                Buy more coins
+                Buy more credits
               </button>
             </Link>
           </div>
