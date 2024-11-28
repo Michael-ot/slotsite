@@ -7,28 +7,29 @@ const geoip2 = window.geoip2;
 const Suscribe = () => {
   const [geoData, setGeoData] = useState(null);
   const [uid, setUid] = useState(null);
-  const [backgroundImage, setBackgroundImage] = useState('/images/Background_1.png');
+  const [backgroundImage, setBackgroundImage] = useState(
+    "/images/Background_1.png"
+  );
   const effectRan = useRef(false);
 
   useEffect(() => {
     // Detect screen size on window resize
     const updateBackgroundImage = () => {
       if (window.innerWidth <= 500) {
-        setBackgroundImage('/images/Background_2.png'); // Mobile background image
+        setBackgroundImage("/images/Background_2.png"); // Mobile background image
       } else {
-        setBackgroundImage('/images/Background_1.png'); // Default background image
+        setBackgroundImage("/images/Background_1.png"); // Default background image
       }
     };
 
     // Run the function on mount and when the window is resized
-    window.addEventListener('resize', updateBackgroundImage);
+    window.addEventListener("resize", updateBackgroundImage);
     updateBackgroundImage(); // Set initial background image based on the screen size
 
     return () => {
-      window.removeEventListener('resize', updateBackgroundImage);
+      window.removeEventListener("resize", updateBackgroundImage);
     };
   }, []);
-
 
   useEffect(() => {
     geoip2.country(
@@ -137,13 +138,13 @@ const Suscribe = () => {
   };
 
   return (
-    <div
-    className="relative min-h-screen bg-cover bg-center"
-    style={{
-      backgroundImage: `url(${backgroundImage})`, // Dynamically set background image
-    }}
-  >      {/* Backdrop for the blur effect */}
-      <div className="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+    <div className="relative min-h-screen bg-cover bg-center">
+      <div
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
+        className="blur-sm absolute bg-cover bg-center  inset-0 bg-black"
+      ></div>
 
       {/* Modal Form */}
       <div className="relative z-10 flex items-center justify-center min-h-screen bg-cover bg-center">
@@ -200,8 +201,14 @@ const Suscribe = () => {
                   Credit Card Number
                 </label>
                 <div className="flex gap-x-[5px]">
-                  <img className="h-[10px] object-cover" src="images/visa.png" />
-                  <img className="h-[10px] object-cover" src="images/mcard.png" />
+                  <img
+                    className="h-[10px] object-cover"
+                    src="images/visa.png"
+                  />
+                  <img
+                    className="h-[10px] object-cover"
+                    src="images/mcard.png"
+                  />
                 </div>
               </div>
               <input
