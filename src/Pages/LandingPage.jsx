@@ -107,7 +107,7 @@ export default function LandingPage() {
           // console.log("REDIRECT1")
           setRedirectTo("/game");
           localStorage.setItem("token", response.data.data.token);
-          localStorage.setItem('user',JSON.stringify(response.data.data.user));
+          localStorage.setItem("user", JSON.stringify(response.data.data.user));
           localStorage.setItem("user-id", response.data.data.user.id);
           setToken(response.data.data.token);
           setUserid(response.data.data.user.id);
@@ -185,18 +185,28 @@ export default function LandingPage() {
       />
 
       <header className="text-center mb-8 sm:mb-12 relative z-10">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-2 sm:mb-4 animate-pulse text-yellow-400">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-2 sm:mb-4 text-yellow-400">
           Win Big!
         </h1>
-        <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
-          Your Chance to Hit the Jackpot
+        <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">
+          Play for{" "}
+          <span className="text-green-400 text-3xl sm:text-4xl md:text-5xl">
+            FREE
+          </span>
+        </p>
+        <p className="text-lg sm:text-xl md:text-2xl text-white">
+          No Deposit Needed!
         </p>
       </header>
 
       <main className="text-center mb-8 sm:mb-12 w-full max-w-md relative z-10">
         <div className="bg-black/50 backdrop-blur-md rounded-lg p-4 sm:p-6 shadow-lg border-4 border-yellow-400 mb-6 sm:mb-8">
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">
-            Collect your Daily Spins for a Chance to Win a $1,000,000 Jackpot!
+            Collect your Daily Spins for a Chance to Win the{" "}
+            <span className="text-yellow-400 text-2xl sm:text-3xl md:text-4xl font-extrabold animate-pulse">
+              $1,000,000
+            </span>{" "}
+            Jackpot!
           </h3>
           <p className="mb-3 sm:mb-4 text-white text-sm sm:text-base">
             Sign up and start playing now!
@@ -247,15 +257,20 @@ export default function LandingPage() {
           </p>
         </div>
       </main>
-
       <section className="text-center mb-8 sm:mb-12 relative z-10 w-full max-w-md">
         <div className="bg-purple-900/80 rounded-lg p-4 sm:p-6 border-2 border-purple-500">
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">
             How to Win:
           </h3>
-          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">
-            Sign up, collect daily spins, and you could be the next winner!
-          </p>
+          <ol className="list-decimal list-inside text-left mx-auto text-white/90 text-sm sm:text-base">
+            <li className="mb-1 sm:mb-2">Sign up with your email</li>
+            <li className="mb-1 sm:mb-2">Collect your daily free spins</li>
+            <li className="mb-1 sm:mb-2">
+              Spin the reels on our exciting slot machines
+            </li>
+            <li className="mb-1 sm:mb-2">Match the winning symbols</li>
+            <li>Celebrate your massive $1,000,000 win!</li>
+          </ol>
         </div>
       </section>
     </div>
