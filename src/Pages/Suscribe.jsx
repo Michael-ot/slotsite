@@ -200,10 +200,10 @@ const Suscribe = () => {
                 <label className="text-white block text-xs font-semibold">
                   Credit Card Number
                 </label>
-                <div className="flex gap-x-[5px]">
+                <div className="flex gap-x-[5px] justify-center items-center">
                   <img
-                    className="h-[10px] object-cover"
-                    src="images/visa.png"
+                    className="h-[25px] object-cover"
+                    src="images/visa3.png"
                   />
                   <img
                     className="h-[10px] object-cover"
