@@ -217,7 +217,7 @@ const GameFrame = () => {
         </div>
       )}
       <iframe
-        src={"https://spintest.vercel.app?token=" + token + "&uid=" + userid}
+        src={"https://slotgame1.onehubplay.com?token=" + token + "&uid=" + userid}
         title="Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none hidden md:block"
         allowFullScreen
@@ -227,7 +227,7 @@ const GameFrame = () => {
       ></iframe>
 
       <iframe
-        src={"https://mobileslot.vercel.app/?token=" + token + "&uid=" + userid}
+        src={"https://slotmobile1.onehubplay.com/?token=" + token + "&uid=" + userid}
         title="Mobile Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none block md:hidden"
         allowFullScreen
