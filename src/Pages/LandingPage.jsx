@@ -158,7 +158,7 @@ export default function LandingPage() {
         <div
           className="min-h-screen flex flex-col items-center justify-center relative px-4 py-8 sm:py-12 overflow-hidden"
           style={{
-            backgroundImage: "url('/images/Landing.png')",
+            backgroundImage: "url('/images/landing.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundAttachment: "fixed",
