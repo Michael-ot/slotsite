@@ -51,6 +51,7 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
+    console.log('This use Effect is called')
     if (geoData == null) return;
     if (effectRan.current) return;
 
@@ -68,7 +69,7 @@ export default function LandingPage() {
     };
 
     if (email) {
-      doRegister(postData);
+      // doRegister(postData);
       return;
     } else {
       setIsEmailLoading(false);
@@ -115,12 +116,12 @@ export default function LandingPage() {
 
   const doRegister = async (postData) => {
     axios.defaults.withCredentials = true;
-    return await axios
+     await axios
       .post(`https://onehubplay.com:8000/api/slot-machine/register`, postData)
       .then((response) => {
         setIsLoading(false);
         if (response.data.status === "Success") {
-          setRedirectTo("/game");
+          navigate("/game")
           localStorage.setItem("token", response.data.data.token);
           localStorage.setItem("user", JSON.stringify(response.data.data.user));
           localStorage.setItem("user-id", response.data.data.user.id);
@@ -145,12 +146,6 @@ export default function LandingPage() {
         setRequestError("Failed to create account");
       });
   };
-
-  useEffect(() => {
-    if (redirectTo) {
-      navigate(redirectTo);
-    }
-  }, [redirectTo, navigate]);
 
   return (
     <>
