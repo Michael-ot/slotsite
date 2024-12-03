@@ -69,7 +69,7 @@ export default function LandingPage() {
     };
 
     if (email) {
-      // doRegister(postData);
+      doRegister(postData);
       return;
     } else {
       setIsEmailLoading(false);

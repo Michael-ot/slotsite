@@ -91,7 +91,7 @@ const GameFrame = () => {
       });
 
     effectRan.current = true;
-  }, [geoData, params]);
+  }, [geoData]);
 
   // useEffect(() => {
   //   if (showModal) {
