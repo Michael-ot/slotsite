@@ -100,7 +100,7 @@ export default function LandingPage() {
       });
 
     effectRan.current = true;
-  }, [geoData, params, location]);
+  }, [geoData,location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
