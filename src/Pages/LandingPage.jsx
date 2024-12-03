@@ -267,7 +267,7 @@ export default function LandingPage() {
         <div
           className="absolute inset-0 flex items-center justify-center z-10 min-h-screen bg-cover bg-center"
           style={{
-            backgroundImage: "url('/images/Landing.png')",
+            backgroundImage: "url('/images/landing.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundAttachment: "fixed",
