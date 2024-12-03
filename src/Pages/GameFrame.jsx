@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const geoip2 = window.geoip2;
 
 const GameFrame = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   // const [showModal, setShowModal] = useState(false);
   // const [showConfirmModal, setShowConfirmModal] = useState(false);
   // const [redirectTo, setRedirectTo] = useState(null);
@@ -221,9 +221,9 @@ const GameFrame = () => {
         title="Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none hidden md:block"
         allowFullScreen
-        // onLoad={() => {
-        //   setIsLoading(false);
-        // }}
+        onLoad={() => {
+          setIsLoading(false);
+        }}
       ></iframe>
 
       <iframe
@@ -231,9 +231,9 @@ const GameFrame = () => {
         title="Mobile Full Screen Iframe"
         className="absolute top-0 left-0 w-full h-full border-none block md:hidden"
         allowFullScreen
-        // onLoad={() => {
-        //   setIsLoading(false);
-        // }}
+        onLoad={() => {
+          setIsLoading(false);
+        }}
       ></iframe>
 
       {/* {showModal && !showConfirmModal && (
