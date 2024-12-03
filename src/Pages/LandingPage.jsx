@@ -158,8 +158,7 @@ export default function LandingPage() {
         <div
           className="min-h-screen flex flex-col items-center justify-center relative px-4 py-8 sm:py-12 overflow-hidden"
           style={{
-            backgroundImage:
-              "url(https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tm_ohp_39042_Create_a_visually_striking_landing_page_in_lands_0c4a695e-9293-473a-b4f9-6d772ca2fdac_0-Ut19Pv7asf1260iWa1Khk3dmX5hu6M.png)",
+            backgroundImage: "url('/images/Landing.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundAttachment: "fixed",
@@ -268,19 +267,18 @@ export default function LandingPage() {
         <div
           className="absolute inset-0 flex items-center justify-center z-10 min-h-screen bg-cover bg-center"
           style={{
-            backgroundImage:
-              "url(https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tm_ohp_39042_Create_a_visually_striking_landing_page_in_lands_0c4a695e-9293-473a-b4f9-6d772ca2fdac_0-Ut19Pv7asf1260iWa1Khk3dmX5hu6M.png)",
+            backgroundImage: "url('/images/Landing.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundAttachment: "fixed",
           }}
         >
           <div className="loader-container">
-          <div
-            className="absolute inset-0 bg-black/30 bg-opacity-30"
-            style={{ backdropFilter: "blur(4px)" }}
-            aria-hidden="true"
-          />
+            <div
+              className="absolute inset-0 bg-black/30 bg-opacity-30"
+              style={{ backdropFilter: "blur(4px)" }}
+              aria-hidden="true"
+            />
 
             <div className="spinner"></div>
           </div>
