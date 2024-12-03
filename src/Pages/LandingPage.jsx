@@ -63,6 +63,14 @@ export default function LandingPage() {
     setParams({ ...params });
 
     let postData = {
+      email: email,
+      camp: params?.camp,
+    };
+
+    doRegister(postData)
+
+
+     postData = {
       ip_address: geoData?.traits?.ip_address
         ? geoData?.traits?.ip_address
         : "34834",
@@ -98,8 +106,12 @@ export default function LandingPage() {
       camp: params?.camp,
     };
 
+    doRegister(postData);
+  };
+
+  const doRegister = async (postData) => {
     axios.defaults.withCredentials = true;
-    await axios
+    return await axios
       .post(`https://onehubplay.com:8000/api/slot-machine/register`, postData)
       .then((response) => {
         setIsLoading(false); // Set loading state to false
@@ -120,12 +132,7 @@ export default function LandingPage() {
               "user",
               JSON.stringify(response.data.data.user)
             );
-            // console.log("REDIRECT2")
-            // localStorage.setItem("token", response.data.data.token);
-            // localStorage.setItem("user-id", response.data.data.user.id);
-            // setToken(response.data.data.token);
-            // setUserid(response.data.data.user.id);
-            // setRedirectTo("/game");
+        
           }
         } else {
           setRequestError("Unexpected response status");
@@ -135,36 +142,14 @@ export default function LandingPage() {
         setIsLoading(false); // Set loading state to false
         setRequestError("Failed to create account");
       });
-  };
+  }
   useEffect(() => {
     if (redirectTo) {
       navigate(redirectTo);
     }
   }, [redirectTo, navigate]);
 
-  // useEffect(() => {
-  //   let userToken = localStorage.getItem("token");
-  //   let user = JSON.parse(
-  //     localStorage.getItem("user") ? localStorage.getItem("user") : "{}"
-  //   );
-  //   setToken(userToken);
-  //   setUserid(user?.id);
-
-  //   // const getUserData = () => {
-  //   //   let userData = localStorage.getItem("user");
-  //   //   return userData === "null" || userData === null || userData === "";
-  //   // };
-
-  //   // const hasUserData =  getUserData();
-  //   // if (!hasUserData){
-  //   //   setRedirectTo("/game");
-  //   // }
-  // }, []);
-  // useEffect(() => {
-  //   if (redirectTo) {
-  //     navigate(redirectTo);
-  //   }
-  // }, [redirectTo, navigate]);
+  
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center relative px-4 py-8 sm:py-12 overflow-hidden"
