@@ -14,6 +14,8 @@ import GameFrame from "./Pages/GameFrame";
 import LoadingPage from "./Pages/LoadingPage";
 import Suscribe from "./Pages/Suscribe";
 import LandingPage from "./Pages/LandingPage";
+import { Toaster } from "react-hot-toast";
+
 
 function App() {
   const [redirectTo, setRedirectTo] = useState(null);
@@ -34,6 +36,7 @@ function App() {
   }, []);
 
   return (
+    <>    <Toaster />
     <Router>
       <Routes>
         {redirectTo === "/" && <Route path="/" element={<LandingPage />} />}
@@ -51,6 +54,9 @@ function App() {
         <Route path="/landing" element={<LandingPage />} />
       </Routes>
     </Router>
+
+    </>
+
   );
 }
 

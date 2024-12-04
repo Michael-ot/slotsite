@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { SparklesIcon, MailIcon } from "lucide-react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const geoip2 = window.geoip2;
 
@@ -19,6 +20,38 @@ const glowStyle = `
     animation: glow 2s ease-in-out infinite;
   }
 `;
+const isValidEmail = async (email) => {
+  // Basic email format validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return false;
+  }
+
+  let emailValidity = false;
+
+  axios.defaults.withCredentials = false;
+  await axios
+    .get(
+      "https://emailvalidation.abstractapi.com/v1/?api_key=fb718f22f2eb4a89b7a2e8997ab92050&email=" +
+        email
+    )
+    .then((response) => {
+      if (
+        response.data?.deliverability === "DELIVERABLE" &&
+        response.data?.is_valid_format?.value &&
+        !response.data?.is_disposable_email?.value
+      ) {
+        emailValidity = true;
+      } else {
+        emailValidity = false;
+      }
+    })
+    .catch((error) => {
+      emailValidity = false;
+    });
+
+  return emailValidity;
+};
 
 export default function LandingPage() {
   const [token, setToken] = useState("");
@@ -51,7 +84,7 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    console.log('This use Effect is called')
+    console.log("This use Effect is called");
     if (geoData == null) return;
     if (effectRan.current) return;
 
@@ -100,12 +133,18 @@ export default function LandingPage() {
       });
 
     effectRan.current = true;
-  }, [geoData,location]);
+  }, [geoData, location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
+    let checkValidity = await isValidEmail(email);
+    if (!checkValidity) {
+      toast.error("Your email address is invalid.");
+      setIsLoading(false);
+      return;
+    }
     let postData = {
       email: email,
       camp: params?.camp,
@@ -116,12 +155,20 @@ export default function LandingPage() {
 
   const doRegister = async (postData) => {
     axios.defaults.withCredentials = true;
-     await axios
+
+    let checkValidity = await isValidEmail(email);
+    if (!checkValidity) {
+      toast.error("Your email address is invalid.");
+      setIsLoading(false);
+      setIsEmailLoading(false)
+      return;
+    }
+    await axios
       .post(`https://onehubplay.com:8000/api/slot-machine/register`, postData)
       .then((response) => {
         setIsLoading(false);
         if (response.data.status === "Success") {
-          navigate("/game")
+          navigate("/game");
           localStorage.setItem("token", response.data.data.token);
           localStorage.setItem("user", JSON.stringify(response.data.data.user));
           localStorage.setItem("user-id", response.data.data.user.id);
