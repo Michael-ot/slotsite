@@ -97,18 +97,6 @@ export default function LandingPage() {
     setParams({ ...params });
 
     let postData = {
-      email: email,
-      camp: params?.camp,
-    };
-
-    if (email) {
-      doRegister(postData);
-      return;
-    } else {
-      setIsEmailLoading(false);
-    }
-
-    postData = {
       ip_address: geoData?.traits?.ip_address
         ? geoData?.traits?.ip_address
         : "34834",
@@ -132,6 +120,19 @@ export default function LandingPage() {
         console.log(error);
       });
 
+    if (email) {
+      let postData = {
+        email: email,
+        camp: params?.camp,
+      };
+
+      doRegister(postData);
+      return;
+    } else {
+      setIsEmailLoading(false);
+    }
+
+  
     effectRan.current = true;
   }, [geoData, location]);
 
