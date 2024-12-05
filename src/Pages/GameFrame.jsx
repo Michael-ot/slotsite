@@ -22,9 +22,6 @@ const GameFrame = () => {
   });
   const [token, setToken] = useState('');
   const [userid, setUserid] = useState('');
-
-  const [tokens, setTokens] = useState('');
-  const [userids, setUserids] = useState('');
   const effectRan = useRef(false);
   const registerEffectRan = useRef(false);
   const navigate = useNavigate();
@@ -34,8 +31,8 @@ const GameFrame = () => {
     
     let userToken = localStorage.getItem("token");
     let user = JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
-    setTokens(userToken);
-    setUserids(user?.id);
+    setToken(userToken);
+    setUserid(user?.id);
 
     
     if (!userToken && !user?.id) {

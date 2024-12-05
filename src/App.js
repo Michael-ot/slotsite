@@ -18,7 +18,8 @@ import { Toaster } from "react-hot-toast";
 
 
 function App() {
-  const [redirectTo, setRedirectTo] = useState(null);
+  const [hasData, setHasData] = useState(null);
+  const [dl,setDL] = useState(null);
 
   useEffect(() => {
     // Function to check if user data exists in localStorage
@@ -28,10 +29,16 @@ function App() {
     };
 
     const hasUserData = getUserData();
+    // Get the query string from the current URL
+    const queryString = window.location.search;
+    // Initialize URLSearchParams with the query string
+    const urlParams = new URLSearchParams(queryString);
+    let dailys = urlParams.get('dl');
+    setDL(dailys)
     if (hasUserData) {
-      setRedirectTo("/game");
+      setHasData(true);
     } else {
-      setRedirectTo("/");
+      setHasData(false);
     }
   }, []);
 
@@ -39,10 +46,9 @@ function App() {
     <>    <Toaster />
     <Router>
       <Routes>
-        {redirectTo === "/" && <Route path="/" element={<LandingPage />} />}
-        {redirectTo === "/game" && (
-          <Route path="/" element={<Navigate to="/game" replace />} />
-        )}
+        {
+          !hasData? (<Route path="/" element={<LandingPage />} />): (<Route path="/" element={<Navigate to={"/game"+window.location.search} replace />} />)
+        }
         <Route path="/buy-coins" element={<Suscribe />} />
         <Route path="/game" element={<GameFrame />} />
         <Route path="/amount" element={<Amount />} />

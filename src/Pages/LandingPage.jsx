@@ -114,10 +114,10 @@ export default function LandingPage() {
 
     trackPage()
       .then((resp) => {
-        console.log(resp);
+        console.log("tracked Page ", resp);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("tracked Page error ",error);
       });
 
     if (email) {
