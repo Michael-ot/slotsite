@@ -301,7 +301,7 @@ const GameFrame = () => {
           >
             <h2
               id="confirm-modal-title"
-              className="text-3xl font-sans mb-4 text-white font-bold"
+              className="text-3xl font-sans mb-4 text-white font-bod"
             >
               Verification Initiated
             </h2>
