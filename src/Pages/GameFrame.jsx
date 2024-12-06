@@ -76,7 +76,8 @@ const GameFrame = () => {
 
     const trackPage = async () => {
       axios.defaults.withCredentials = true;
-      return await axios.post(`https://onehubplay.com:8000/api/slot-game-1-visit`, postData);
+      return await axios.post(`https://onehubplay.com:8000/api/slot-game-1-visit/${userid}`, postData,
+        { headers: { Authorization: `Bearer ${token}` } });
     };
 
     trackPage()
@@ -86,6 +87,8 @@ const GameFrame = () => {
       .catch((error) => {
         console.log(error);
       });
+
+      
 
     effectRan.current = true;
   }, [geoData]);
