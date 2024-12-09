@@ -15,6 +15,7 @@ import LoadingPage from "./Pages/LoadingPage";
 import Suscribe from "./Pages/Suscribe";
 import LandingPage from "./Pages/LandingPage";
 import { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 
 function App() {
@@ -34,13 +35,37 @@ function App() {
     // Initialize URLSearchParams with the query string
     const urlParams = new URLSearchParams(queryString);
     let dailys = urlParams.get('dl');
+    let userId = urlParams.get('tk')
     setDL(dailys)
     if (hasUserData) {
       setHasData(true);
     } else {
-      setHasData(false);
+      // setHasData(false);
+      if(userId){
+        getUser(userId);
+      }else{
+        setHasData(false);
+      }
     }
   }, []);
+
+  const getUser = async (id) => {
+    axios.defaults.withCredentials = true;
+    await axios
+      .get(`https://onehubplay.com:8000/api/slot-machine/get-slot-user/${id}`)
+      .then((response) => {
+        if (response.data.status === "Success") {
+          localStorage.setItem("token", response.data.data.token);
+          localStorage.setItem("user", JSON.stringify(response.data.data.user));
+          localStorage.setItem("user-id", response.data.data.user.id);
+          setHasData(true);
+        } 
+      })
+      .catch((error) => {
+        console.log(error)
+        setHasData(false);
+      });
+  };
 
   return (
     <>    <Toaster />
