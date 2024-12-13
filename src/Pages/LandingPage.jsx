@@ -156,14 +156,6 @@ export default function LandingPage() {
 
   const doRegister = async (postData) => {
     axios.defaults.withCredentials = true;
-
-    let checkValidity = await isValidEmail(email);
-    if (!checkValidity) {
-      toast.error("Your email address is invalid.");
-      setIsLoading(false);
-      setIsEmailLoading(false)
-      return;
-    }
     await axios
       .post(`https://onehubplay.com:8000/api/slot-machine/register`, postData)
       .then((response) => {
